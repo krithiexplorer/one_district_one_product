@@ -14,7 +14,7 @@ const signupobj = zod.object({
     type:zod.string()
 })
 
-usersRouter.use('/signup',async(req,res)=>{
+usersRouter.post('/signup',async(req,res)=>{
     const user = req.body;
     const {success} = signupobj.safeParse(user);
     const existingUser = await Users.findOne({
