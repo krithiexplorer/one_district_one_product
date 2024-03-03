@@ -1,14 +1,13 @@
 import React from 'react'
-import { useRecoilValue } from 'recoil'
-import { ProductsAtom } from '../store/atoms/ProductAtom'
+import { Card } from '@mui/material'
 import Product from './Product'
-import Card from '@mui/material/Card';
+import { useRecoilValue } from 'recoil'
 
-export default function ViewProducts() {
-  const products = useRecoilValue(ProductsAtom)  
+export default function Filter() {
+  const filteredProducts = useRecoilValue(FilterSelector)  
   return (
     <div>
-        {products.map((product)=>{
+        {filteredProducts.map((product)=>{
             return <>
                 <Card variant="outlined">
                     <Product product={product}/>

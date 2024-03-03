@@ -6,7 +6,7 @@ export default function Product({product}){
         <h4>{product.name}</h4>
         <h5>{product.price}</h5>
         <p>{product.quantity}</p>
-        <h4>{product.district}</h4>
+        <h4>{product.district}</h4>32
         <h4>{product.dealer}</h4>
         <h4>{product.offer}</h4>
         <h4>{product.description}</h4>
