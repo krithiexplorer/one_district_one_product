@@ -1,20 +1,14 @@
-import { atom } from "recoil"
+import { atom, selector } from "recoil";
+import axios from "axios"
 
 export const ProductsAtom = atom({
     key:"ProductsAtom",
-    default:[]
+    default:selector({
+        key:"ProductFetch",
+        get: async() => {
+            var res = await axios.get("http://localhost:3000/api/v1/users/products");
+            return res.data.products;
+        }
+    })
 })
 
-export const ProductAtom = atom({
-    key:"ProductAtom",
-    default:{
-        name:"",
-        price:0,
-        quantity:0,
-        district:"",
-        dealer:"",
-        offer:false,
-        description:"",
-        image:""
-    }
-})

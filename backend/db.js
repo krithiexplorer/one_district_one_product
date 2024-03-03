@@ -1,8 +1,8 @@
-const {mongoose, Schema, model} = require("mongoose");
+const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://thisshonrobert:9g4V501my5XYW0G1@cluster0.ewmaqqe.mongodb.net/one_district_one_product");
+mongoose.connect("mongodb+srv://learning:GNO0z745ZWvgVARG@cluster0.stznz.mongodb.net/one_district_one_product");
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username:{
         type:String,
         required:true,
@@ -32,6 +32,21 @@ const userSchema = new Schema({
     }
 })
 
-const Users = model('Users',userSchema);
+const productSchema = new mongoose.Schema({
+    name : String,
+    price: String,
+    seller: String,
+    image : String,
+    description : String,
+    offer: String,
+    category: String,
+    district: String
+})
 
-module.exports = Users;
+const Users = mongoose.model('Users',userSchema);
+const Products = mongoose.model('Products',productSchema);
+
+module.exports = {
+    Users, 
+    Products
+};
