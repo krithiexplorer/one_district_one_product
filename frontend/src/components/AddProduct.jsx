@@ -61,6 +61,7 @@ const ProductUploadComponent = () => {
 
   return (
     <div>
+      <div className='p-50 flex shadow bg-slate-900'>
       <label>Name:</label>
       <input type="text" name="name" value={productDetails.name} onChange={handleInputChange} />
 
@@ -83,6 +84,7 @@ const ProductUploadComponent = () => {
       <input type="file" name="image" onChange={handleImageChange} />
 
       <Button><button onClick={handleProductUpload}>Upload Product</button></Button>
+      </div> 
     </div>
   );
 };

@@ -6,7 +6,8 @@ export default function Header() {
     const navigate = useNavigate();
   return (
     <div>
-        <Button>
+      <div className='bg-red-300'>
+      <Button>
         <button onClick={()=>{navigate("/")}}>Home</button>
         <button onClick={()=>{navigate("/view_products")}}>Shop</button>
         <button onClick={()=>{navigate("/filter")}}>Filter</button>
@@ -15,6 +16,7 @@ export default function Header() {
         <button onClick={()=>{navigate("/offers")}}>Offers</button>
         <button onClick={()=>{navigate("/addProduct")}}>Add Product</button>
         </Button>
+      </div>
     </div>
   )
 }
