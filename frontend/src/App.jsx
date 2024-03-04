@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
 import FetchProducts from './components/FetchProducts';
+import AddProduct from './components/AddProduct';
 
 function App() {
     return <>

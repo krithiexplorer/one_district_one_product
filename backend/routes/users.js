@@ -68,4 +68,8 @@ usersRouter.post('/addProduct',async(req,res)=>{
     }
 })
 
+
+usersRouter.post('add_to_wishlist/',(req,res)=>{
+    
+})
 module.exports = usersRouter;

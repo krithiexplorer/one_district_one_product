@@ -6,6 +6,4 @@ const sellersRouter = require('./seller');
 rootRouter.use('/users',usersRouter);
 rootRouter.use('/sellers',sellersRouter);
 
-module.exports = {
-    usersRouter, sellersRouter
-}
+module.exports = rootRouter

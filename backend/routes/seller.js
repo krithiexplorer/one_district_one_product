@@ -2,6 +2,8 @@ const express = require("express");
 const  sellersRouter = express.Router();
 const zod = require('zod');
 const { Products, Sellers } = require("../db");
+const jwt = require('jsonwebtoken');
+const PASSWORD = "unchi";
 
 
 sellersRouter.post('/addProduct',async(req,res)=>{

@@ -13,6 +13,7 @@ export default function Header() {
         <button onClick={()=>{navigate("/cart")}}>Cart</button>
         <button onClick={()=>{navigate("/wishlist")}}>WishList</button>
         <button onClick={()=>{navigate("/offers")}}>Offers</button>
+        <button onClick={()=>{navigate("/addProduct")}}>Add Product</button>
         </Button>
     </div>
   )
