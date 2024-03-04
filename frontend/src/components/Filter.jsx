@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from '@mui/material'
 import Product from './Product'
 import { useRecoilValue } from 'recoil'
+import { FilterSelector } from '../store/selectors/FilterSelector'
 
 export default function Filter() {
   const filteredProducts = useRecoilValue(FilterSelector)  
@@ -9,7 +10,7 @@ export default function Filter() {
     <div>
         {filteredProducts.map((product)=>{
             return <>
-                <Card variant="outlined">
+                <Card key={product.id} variant="outlined">
                     <Product product={product}/>
                 </Card>
             </>
