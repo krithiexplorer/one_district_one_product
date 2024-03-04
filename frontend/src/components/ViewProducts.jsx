@@ -10,7 +10,7 @@ export default function ViewProducts() {
     <div>
         {products.map((product)=>{
             return <>
-                <Card variant="outlined">
+                <Card key={product.id} variant="outlined">
                     <Product product={product}/>
                 </Card>
             </>

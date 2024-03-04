@@ -9,8 +9,7 @@ const signupobj = zod.object({
     username:zod.string().email(),
     firstName:zod.string(),
     lastName:zod.string(),
-    password:zod.string().min(6),
-    type:zod.string()
+    password:zod.string().min(6)
 })
 
 usersRouter.post('/signup',async(req,res)=>{
@@ -30,8 +29,7 @@ usersRouter.post('/signup',async(req,res)=>{
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
             msg:"user Created successfully",
-            token:token,
-            type:currentUser.type
+            token:token
         })
     }
 });
