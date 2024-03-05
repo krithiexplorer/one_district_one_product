@@ -10,7 +10,7 @@ export default function Product({product}){
         <h4>{product.dealer}</h4>
         <h4>{product.offer}</h4>
         <h4>{product.description}</h4>
-        <h4>{product.image}</h4>
+        <h4>{product.image}</h4> 
     </div>
   )
 }

@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-
+const { authMiddleware } = require("../middleware");
 const { Products, Users } = require("../db");
 const jwt = require('jsonwebtoken');
 const userSignupObj = require("../validate");
@@ -68,35 +68,60 @@ usersRouter.get('/products',async(req,res)=>{
     })
 })
 
-usersRouter.post('/addProduct',async(req,res)=>{
-    const name = req.body.name;
-    const price = req.body.price;
-    const seller = req.body.seller;
-    const image = req.body.image;
-    const description = req.body.description;
-    const offer = req.body.offer;
-    const category = req.body.category;
-    const district = req.body.district;
-
-    const entry = await Products.create({
-        name,
-        price,
-        seller,
-        image,
-        description,
-        offer,
-        category,
-        district
-    })
-    if(entry){
+usersRouter.post('/wishlist/:productId', authMiddleware, (req, res) => {
+    const productId = req.params.productId;
+    const userId = req.headers.username;
+    Users.updateOne({_id : userId},{
+        "$push": {
+            wishlistedProducts: productId
+        }
+    }).then(()=>{
         res.json({
-            msg:"successful"
+            msg:"course purchase success"
         })
-    }
+    })
+});
+
+usersRouter.get('/viewwishlist',authMiddleware, async(req,res)=>{
+    const userId = req.userId;
+    const user = await Users.findOne({_id:userId})
+    const wishlisted = await Products.find({
+        _id:{
+            "$in":user.wishlistedProducts
+        }
+    })
+
+    res.json({
+        products:wishlisted
+    })
 })
 
+usersRouter.post('/cart/:productId', authMiddleware, (req, res) => {
+    const productId = req.params.productId;
+    const userId = req.headers.username;
+    Users.updateOne({_id : userId},{
+        "$push": {
+            cartProducts: productId
+        }
+    }).then(()=>{
+        res.json({
+            msg:"course purchase success"
+        })
+    })
+});
 
-usersRouter.post('add_to_wishlist/',(req,res)=>{
-    
+usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
+    const userId = req.userId;
+    const user = await Users.findOne({_id:userId})
+    const cartProducts = await Products.find({
+        _id:{
+            "$in":user.cartProducts
+        }
+    })
+
+    res.json({
+        products:cartProducts
+    })
 })
+
 module.exports = usersRouter;
