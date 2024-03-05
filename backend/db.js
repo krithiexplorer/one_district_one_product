@@ -26,7 +26,14 @@ const userSchema = new mongoose.Schema({
         required:true,
         minlength:6
     },
-  
+    wishlistedProducts:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Products'
+    }],
+    cartProducts:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Products'
+    }]
 })
 
 const productSchema = new mongoose.Schema({
@@ -72,7 +79,6 @@ const sellerSchema = new mongoose.Schema({
         type:String,
         required:true
     }
-
 })
 
 const Users = mongoose.model('Users',userSchema);

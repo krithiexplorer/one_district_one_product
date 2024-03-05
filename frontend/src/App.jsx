@@ -4,7 +4,7 @@ import { RecoilRoot } from 'recoil'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FilterByOffer from './components/FilterByOffer';
 import Wishlist from './components/Wishlist';
-import Cart from './components/Cart';
+import ViewCart from './components/ViewCart';
 import Landing from './components/Landing';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
@@ -19,7 +19,7 @@ function App() {
         <Header></Header>
           <Routes>
             <Route path="/" element={<Landing/>}/>
-            <Route path="/cart" element={<Cart/>}/>
+            <Route path="/cart" element={<ViewCart/>}/>
             <Route path="/wishlist" element={<Wishlist/>}/>
             <Route path="/view_products" element={<ViewProducts/>}/>
             <Route path="/filter" element={<FilterBar/>}/>
