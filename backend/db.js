@@ -26,10 +26,7 @@ const userSchema = new mongoose.Schema({
         required:true,
         minlength:6
     },
-    type:{
-        type:String,
-        required:true
-    }
+  
 })
 
 const productSchema = new mongoose.Schema({

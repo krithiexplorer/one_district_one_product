@@ -1,20 +1,16 @@
 const express = require("express");
 const usersRouter = express.Router();
-const zod = require('zod');
+
 const { Products, Users } = require("../db");
 const jwt = require('jsonwebtoken');
+const userSignupObj = require("../validate");
+const signinobj =  require("../validate");
 const PASSWORD = "unchi";
 
-const signupobj = zod.object({
-    username:zod.string().email(),
-    firstName:zod.string(),
-    lastName:zod.string(),
-    password:zod.string().min(6)
-})
 
 usersRouter.post('/signup',async(req,res)=>{
     const user = req.body;
-    const {success} = signupobj.safeParse(user);
+    const {success} = userSignupObj.safeParse(user);
     const existingUser = await Users.findOne({
         username:user.username
     })
@@ -33,6 +29,37 @@ usersRouter.post('/signup',async(req,res)=>{
         })
     }
 });
+
+usersRouter.post('/signin',async(req,res)=>{
+    const user = req.body;
+    const {success} = signinobj.safeParse(user);
+    if(!success){
+        return  res.status(422).json({
+             msg:"Email already taken / Incorrect inputs"
+         })
+     }
+    try {
+        const existingUser =  await Users.findOne(user)
+         const userId = existingUser._id;
+         if(existingUser){
+             const token = jwt.sign({userId},PASSWORD)
+                 res.status(200).json({
+                     id:userId,
+                     token:token
+                 })
+         }
+         else{
+             return res.json({
+                 msg:"user does not exist"
+             })
+         }
+     } catch (error) {
+         res.json({
+             msg:"Error while logging in"
+         })
+     }
+ 
+})
 
 usersRouter.get('/products',async(req,res)=>{
     const products = await Products.find({});
