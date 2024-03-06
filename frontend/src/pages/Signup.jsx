@@ -1,6 +1,14 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { ButtonComponent } from "../components/ButtonComponent";
+import { ButtonWarning } from "../components/ButtonWarning";
+import { Heading } from "../components/Heading";
+import { InputBox } from "../components/InputBox";
+import { SubHeading } from "../components/SubHeading";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 export function Signup(){
@@ -29,7 +37,7 @@ export function Signup(){
                 setPassword(e.target.value);
             }} label={"Password"} placeholder="12234"/>
             <ButtonComponent onClick={ async () => {
-            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+            const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
               username,
               firstName,
               lastName,
@@ -38,7 +46,7 @@ export function Signup(){
             localStorage.setItem("token",response.data.token);
             localStorage.setItem('userId', response.data.id);
 
-            navigate("/dashboard");
+            navigate("/");
             }} buttonname={"Sign up"}  />
             <ButtonWarning text={"Already have an account? "} buttonText={"Sign In"}  to={"/signin"}/>
         </div>
