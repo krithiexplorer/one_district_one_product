@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
         required:true,
         minlength:6
     },
+    address:{
+        type:String,
+        required:true,
+        maxlenght:50
+    },
     wishlistedProducts:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Products'
