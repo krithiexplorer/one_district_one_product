@@ -3,8 +3,8 @@ const usersRouter = express.Router();
 const { authMiddleware } = require("../middleware");
 const { Products, Users } = require("../db");
 const jwt = require('jsonwebtoken');
-const userSignupObj = require("../validate");
-const signinobj =  require("../validate");
+const {userSignupObj} = require("../validate");
+const {signinobj} =  require("../validate");
 const PASSWORD = "unchi";
 
 
@@ -22,9 +22,9 @@ usersRouter.post('/signup',async(req,res)=>{
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
     if(currentUser){
-        const token = jwt.sign({userId},PASSWORD)
+        const token = jwt.sign(userId,PASSWORD)
         res.status(200).json({
-            msg:"user Created successfully",
+            seller:false,
             token:token
         })
     }
@@ -44,7 +44,7 @@ usersRouter.post('/signin',async(req,res)=>{
          if(existingUser){
              const token = jwt.sign({userId},PASSWORD)
                  res.status(200).json({
-                     id:userId,
+                     seller:false,
                      token:token
                  })
          }
@@ -68,12 +68,12 @@ usersRouter.get('/products',async(req,res)=>{
     })
 })
 
-usersRouter.post('/wishlist/:productId', authMiddleware, (req, res) => {
+usersRouter.put('/wishlist/:productId', authMiddleware, (req, res) => {
     const productId = req.params.productId;
-    const userId = req.headers.username;
+    const userId = req.userId;
     Users.updateOne({_id : userId},{
         "$push": {
-            wishlistedProducts: productId
+            wishlistedProducts: [productId]
         }
     }).then(()=>{
         res.json({
@@ -96,12 +96,12 @@ usersRouter.get('/viewwishlist',authMiddleware, async(req,res)=>{
     })
 })
 
-usersRouter.post('/cart/:productId', authMiddleware, (req, res) => {
+usersRouter.put('/cart/:productId', authMiddleware, (req, res) => {
     const productId = req.params.productId;
-    const userId = req.headers.username;
+    const userId = req.userId;
     Users.updateOne({_id : userId},{
         "$push": {
-            cartProducts: productId
+            cartProducts: [productId]
         }
     }).then(()=>{
         res.json({

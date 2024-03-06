@@ -28,8 +28,7 @@ const userSchema = new mongoose.Schema({
     },
     address:{
         type:String,
-        required:true,
-        maxlenght:50
+        maxlength:50
     },
     wishlistedProducts:[{
         type:mongoose.Schema.Types.ObjectId,
@@ -45,11 +44,15 @@ const productSchema = new mongoose.Schema({
     name : String,
     price: String,
     seller: String,
-    image : String,
+    image : {
+        data:Buffer,
+        contentType:String
+    },
     description : String,
     offer: String,
     category: String,
-    district: String
+    district: String,
+    quantity: Number
 })
 
 const sellerSchema = new mongoose.Schema({

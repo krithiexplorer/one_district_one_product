@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material';
+import { FetchSellerDetails } from '../store/selectors/FetchSellerDetails';
+import { useRecoilValue } from 'recoil';
 
 const ProductUploadComponent = () => {
-  const navigate = useNavigate();
+  const fetchSellerDetails = useRecoilValue(FetchSellerDetails)
   const [productDetails, setProductDetails] = useState({
     name: '',
     price: '',
-    quantity: '',
-    description: '',
-    category: '',
-    offer: '',
+    seller: '',
     image: null,
+    description: '',
+    offer: '',
+    category: '',
+    district: '',
+    quantity : 0
   });
 
   const handleInputChange = (e) => {
@@ -36,22 +39,37 @@ const ProductUploadComponent = () => {
       const formData = new FormData();
       formData.append('name', productDetails.name);
       formData.append('price', productDetails.price);
-      formData.append('quantity', productDetails.quantity);
-      formData.append('description', productDetails.description);
-      formData.append('category', productDetails.category);
-      formData.append('offer', productDetails.offer);
+      formData.append('seller',fetchSellerDetails.seller);
       formData.append('image', productDetails.image);
+      formData.append('description', productDetails.description);
+      formData.append('offer', productDetails.offer);
+      formData.append('category', productDetails.category);
+      formData.append('district',fetchSellerDetails.district);
+      formData.append('quantity', productDetails.quantity);
+      
 
-      const entry = await axios.post('http://localhost:3000/api/v1/sellers/addProduct', formData, {
+      const entry = await axios.post('http://localhost:3000/api/v1/sellers/addProduct', {
+        name:productDetails.name,
+        price:productDetails.price,
+        seller:fetchSellerDetails.seller,
+        image:productDetails.image,
+        description:productDetails.description,
+        offer:productDetails.offer,
+        category:productDetails.category,
+        district:fetchSellerDetails.district,
+        quantity:productDetails.quantity
+      }, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: "Bearer " + localStorage.getItem('token')
+          'Authorization': "Bearer " + localStorage.getItem('token')
         },
       });
 
       if(entry)
       {
-        navigate("/")
+        return <>
+          <h2>Success</h2>
+        </>
       }
       // Handle success or navigate to a different page
 
@@ -62,7 +80,7 @@ const ProductUploadComponent = () => {
 
   return (
     <div>
-      <div className='p-50 flex shadow bg-slate-900'>
+      <div>
       <label>Name:</label>
       <input type="text" name="name" value={productDetails.name} onChange={handleInputChange} />
 
@@ -70,16 +88,16 @@ const ProductUploadComponent = () => {
       <input type="text" name="price" value={productDetails.price} onChange={handleInputChange} />
 
       <label>Quantity:</label>
-      <input type="text" name="quantity" value={productDetails.quantity} onChange={handleInputChange} />
+      <input type="number" name="quantity" value={productDetails.quantity} onChange={handleInputChange} />
 
       <label>Description:</label>
-      <input type="text" name="quantity" value={productDetails.description} onChange={handleInputChange} />
+      <input type="text" name="description" value={productDetails.description} onChange={handleInputChange} />
 
       <label>Category:</label>
-      <input type="text" name="quantity" value={productDetails.category} onChange={handleInputChange} />
+      <input type="text" name="category" value={productDetails.category} onChange={handleInputChange} />
 
       <label>Offer:</label>
-      <input type="text" name="quantity" value={productDetails.offer} onChange={handleInputChange} />
+      <input type="text" name="offer" value={productDetails.offer} onChange={handleInputChange} />
 
       <label>Image:</label>
       <input type="file" name="image" onChange={handleImageChange} />

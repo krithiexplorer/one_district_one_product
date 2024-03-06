@@ -1,21 +1,20 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { ButtonComponent } from "../components/ButtonComponent";
 import { ButtonWarning } from "../components/ButtonWarning";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
 
 
-export function Signup(){
+export default function SignUpSeller(){
     const[firstName,setFirstName] = useState("");
     const[lastName,setLastName] = useState("");
     const[username,setUsername] = useState("");
     const[password,setPassword] = useState("");
+    const[registeredId, setRegisteredId] = useState("");
+    const[district, setDistrict] = useState("");
    const navigate = useNavigate();
    
     return(
@@ -36,17 +35,25 @@ export function Signup(){
             <InputBox onChange={e=>{
                 setPassword(e.target.value);
             }} label={"Password"} placeholder="12234"/>
+            <InputBox onChange={e=>{
+                setRegisteredId(e.target.value);
+            }} label={"Register Id"} placeholder="Govt verified ID of your business"/>
+            <InputBox onChange={e=>{
+                setDistrict(e.target.value);
+            }} label={"District"} placeholder="District"/>
             <ButtonComponent onClick={ async () => {
-            const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
+            const response = await axios.post("http://localhost:3000/api/v1/sellers/signup", {
               username,
               firstName,
               lastName,
-              password
+              password,
+              registeredId,
+              district
             });       
             localStorage.setItem("token",response.data.token);
-            localStorage.setItem('userId', response.data.id);
+            localStorage.setItem("seller",response.data.seller);
 
-            navigate("/");
+            navigate("/seller/addProduct");
             }} buttonname={"Sign up"}  />
             <ButtonWarning text={"Already have an account? "} buttonText={"Sign In"}  to={"/signin"}/>
         </div>
