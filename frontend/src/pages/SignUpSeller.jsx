@@ -25,13 +25,13 @@ export default function SignUpSeller(){
             <SubHeading text={"Enter your information to create an account"}/>
             <InputBox onChange={e=>{
                 setFirstName(e.target.value);
-            }} label={"First Name"} placeholder="thisshon"/>
+            }} label={"First Name"} placeholder="John"/>
             <InputBox onChange={e=>{
                 setLastName(e.target.value)
             }}   label={"Last Name"} placeholder="robert"/>
             <InputBox onChange={e=>{
                 setUsername(e.target.value);
-            }}  label={"Email"} placeholder="thisshon@gmail.com"/>
+            }}  label={"Email"} placeholder="john@example.com"/>
             <InputBox onChange={e=>{
                 setPassword(e.target.value);
             }} label={"Password"} placeholder="12234"/>

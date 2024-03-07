@@ -6,7 +6,11 @@ export const FetchWishlistedProducts = atom({
     default: selector({
         key:"FetchWishlistedProductsSelector",
         get:async()=>{
-            const res = await axios.get("http://localhost:3000/api/v1/users/wishlist");
+            const res = await axios.get("http://localhost:3000/api/v1/users/viewwishlist",{
+                headers:{
+                    'Authorization': "Bearer " + localStorage.getItem('token')
+                }
+            });
             return res.data.products
         }
     })

@@ -22,7 +22,7 @@ usersRouter.post('/signup',async(req,res)=>{
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
     if(currentUser){
-        const token = jwt.sign(userId,PASSWORD)
+        const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
             seller:false,
             token:token

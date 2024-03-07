@@ -4,7 +4,7 @@ import { Card } from '@mui/material';
 import Product from '../components/Product';
 import { ProductsAtom } from '../store/atoms/ProductAtom';
 
-export default function ViewCart() {
+export default function ViewProducts() {
   const ProductsLoadable = useRecoilValueLoadable(ProductsAtom);
 
   switch (ProductsLoadable.state) {

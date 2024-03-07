@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { FetchSellerDetails } from '../store/selectors/FetchSellerDetails';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
+
 
 const ProductUploadComponent = () => {
-  const fetchSellerDetails = useRecoilValue(FetchSellerDetails)
+
+  const [sellerDetails, setSellerDetails] = useRecoilState(FetchSellerDetails);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/sellers/details", {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem('token')
+          }
+        });
+        setSellerDetails(response.data.details);
+      } catch (error) {
+        console.error("Error fetching seller details:", error);
+      }
+    };
+
+    fetchData();
+  }, [setSellerDetails]);
+
   const [productDetails, setProductDetails] = useState({
     name: '',
     price: '',
@@ -36,27 +56,15 @@ const ProductUploadComponent = () => {
 
   const handleProductUpload = async () => {
     try {
-      const formData = new FormData();
-      formData.append('name', productDetails.name);
-      formData.append('price', productDetails.price);
-      formData.append('seller',fetchSellerDetails.seller);
-      formData.append('image', productDetails.image);
-      formData.append('description', productDetails.description);
-      formData.append('offer', productDetails.offer);
-      formData.append('category', productDetails.category);
-      formData.append('district',fetchSellerDetails.district);
-      formData.append('quantity', productDetails.quantity);
-      
-
       const entry = await axios.post('http://localhost:3000/api/v1/sellers/addProduct', {
         name:productDetails.name,
         price:productDetails.price,
-        seller:fetchSellerDetails.seller,
+        seller:sellerDetails.seller,
         image:productDetails.image,
         description:productDetails.description,
         offer:productDetails.offer,
         category:productDetails.category,
-        district:fetchSellerDetails.district,
+        district:sellerDetails.district,
         quantity:productDetails.quantity
       }, {
         headers: {
@@ -80,7 +88,8 @@ const ProductUploadComponent = () => {
 
   return (
     <div>
-      <div>
+      <div className='h-screen flex justify-center items-center'>
+      <div className='flex flex-col bg-slate-500'>
       <label>Name:</label>
       <input type="text" name="name" value={productDetails.name} onChange={handleInputChange} />
 
@@ -104,6 +113,8 @@ const ProductUploadComponent = () => {
 
       <Button><button onClick={handleProductUpload}>Upload Product</button></Button>
       </div> 
+      </div>
+      
     </div>
   );
 };
