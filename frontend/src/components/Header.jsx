@@ -6,16 +6,19 @@ export default function Header() {
     const navigate = useNavigate();
   return (
     <div>
-      <div className='bg-red-300'>
-      <Button>
-        <button onClick={()=>{navigate("/")}}>Home</button>
-        <button onClick={()=>{navigate("/view_products")}}>Shop</button>
-        <button onClick={()=>{navigate("/filter")}}>Filter</button>
-        <button onClick={()=>{navigate("/cart")}}>Cart</button>
-        <button onClick={()=>{navigate("/wishlist")}}>WishList</button>
-        <button onClick={()=>{navigate("/offers")}}>Offers</button>
-        <button onClick={()=>{navigate("/addProduct")}}>Add Product</button>
-        </Button>
+      <div className="bg-slate-900 flex justify-end">
+        <div>
+        <Button onClick={()=>{navigate("/")}}>Home</Button>
+        <Button onClick={()=>{navigate("/view_products")}}>Shop</Button>
+        <Button onClick={()=>{navigate("/filter")}}>Filter</Button>
+        <Button onClick={()=>{navigate("/cart")}}>Cart</Button>
+        <Button onClick={()=>{navigate("/wishlist")}}>WishList</Button>
+        <Button onClick={()=>{navigate("/offers")}}>Offers</Button>
+        <Button onClick={()=>{navigate("/seller/addProduct")}}>Add Product</Button>
+        </div>
+        <div>
+        <Button onClick={()=>{navigate("/logout")}}>Logout</Button>
+        </div>
       </div>
     </div>
   )

@@ -4,8 +4,10 @@ const zod = require('zod');
 const { Products, Sellers } = require("../db");
 const jwt = require('jsonwebtoken');
 const PASSWORD = "unchi";
-const sellerSignupObj = require("../validate");
+const {sellerSignupObj, signinobj} = require("../validate");
 const { authMiddleware } = require("../middleware");
+const multer = require('multer');
+const upload = multer();
 
 
 sellersRouter.post('/signup',async(req,res)=>{
@@ -24,7 +26,7 @@ sellersRouter.post('/signup',async(req,res)=>{
     if(currentUser){
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
-            msg:"user Created successfully",
+            seller:true,
             token:token
         })
     }
@@ -44,7 +46,7 @@ sellersRouter.post('/signin',async(req,res)=>{
          if(existingUser){
              const token = jwt.sign({userId},PASSWORD)
                  res.status(200).json({
-                     id:userId,
+                     seller:true,
                      token:token
                  })
          }
@@ -61,30 +63,33 @@ sellersRouter.post('/signin',async(req,res)=>{
  
 })
 
-sellersRouter.post('/addProduct',authMiddleware,async(req,res)=>{
+sellersRouter.post('/addProduct',authMiddleware, upload.single('image'), async(req,res)=>{
     const name = req.body.name;
     const price = req.body.price;
     const seller = req.body.seller;
-    const image = req.body.image;
+    const image = req.file;
     const description = req.body.description;
     const offer = req.body.offer;
     const category = req.body.category;
     const district = req.body.district;
+    const quantity = req.body.quantity;
 
     const entry = await Products.create({
         name,
         price,
         seller,
-        image,
+        image: {
+            data: image.buffer,
+            contentType: image.mimetype,
+          },
         description,
         offer,
         category,
-        district
+        district,
+        quantity
     })
     if(entry){
-        res.json({
-            msg:"successful"
-        })
+        res.status(201).json({ message: 'Product uploaded successfully' });
     }
 })
 
@@ -100,6 +105,19 @@ sellersRouter.get('/registeredId', authMiddleware, async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 });
+
+sellersRouter.get('/details',authMiddleware,async(req,res)=>
+{
+    const userId = req.userId;
+    const detailsOfSeller = await Sellers.findById(userId);
+    const details = {
+        seller: detailsOfSeller.firstName,
+        district: detailsOfSeller.district
+    }
+    return res.json({
+        details
+    })
+})
 
 
 module.exports = sellersRouter;

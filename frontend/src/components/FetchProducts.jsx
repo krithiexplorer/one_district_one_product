@@ -9,7 +9,13 @@ export default function FetchProducts(){
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/v1/users/products");
+        const res = await axios.get("http://localhost:3000/api/v1/users/products",
+          {
+            headers: {
+              'Authorization': "Bearer " + localStorage.getItem('token')
+            }
+          }
+        );
         setProducts(res.data.products);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -19,7 +25,7 @@ export default function FetchProducts(){
     fetchData();
   }, [setProducts]);
 
-  return null; // or loading indicator if needed
+  return null;
 };
 
 

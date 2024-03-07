@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function Signin(){
+export default function SigninBuyer(){
   
     const[username,setUsername] = useState("");
     const[password,setPassword] = useState("");
@@ -22,20 +22,21 @@ export default function Signin(){
            
             <InputBox onChange={e=>{
                 setUsername(e.target.value);
-            }}  label={"Email"} placeholder="thisshon@gmail.com"/>
+            }}  label={"Email"} placeholder="john@example.com"/>
             <InputBox onChange={e=>{
                 setPassword(e.target.value);
             }} label={"Password"} placeholder="12234"/>
             <ButtonComponent onClick={ async () => {
-            const response = await axios.post("http://localhost:3000/api/v1/users/signin", {
+            const response = await axios.post("http://localhost:3000/api/v1/sellers/signin", {
               username,
               password
             });       
             localStorage.setItem("token",response.data.token);
+            localStorage.setItem("seller",response.data.seller);
 
-            navigate("/");
+            navigate("/seller/addProduct");
             }}buttonname={"Sign in"} />
-            <ButtonWarning text={"Don't have an account? "} buttonText={"Sign Up"}  to={"/signup"}/>
+            <ButtonWarning text={"Don't have an account? "} buttonText={"Sign Up"}  to={"/signup/seller"}/>
         </div>
        </div>
     </div>)

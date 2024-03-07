@@ -1,8 +1,7 @@
-import { atomFamily, selectorFamily } from "recoil";
+import { atom } from "recoil";
 
-export const FetchSellerDetails = atomFamily({
-    key:"FetchSellerAtom",
-    default: selectorFamily({
-        
-    })
-})
+export const FetchSellerDetails = atom({
+  key: "FetchSellerDetailAtom",
+  default: {} // or any default value you want to set initially
+});
+

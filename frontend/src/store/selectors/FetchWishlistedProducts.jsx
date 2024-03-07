@@ -1,12 +1,16 @@
 import axios from "axios";
-import { atomFamily, selectorFamily } from "recoil";
+import { atom, selector } from "recoil";
 
-export const FetchWishlistedProducts = atomFamily({
+export const FetchWishlistedProducts = atom({
     key:"FetchWishlistedProductsAtom",
-    default: selectorFamily({
+    default: selector({
         key:"FetchWishlistedProductsSelector",
-        get:(id)=>async()=>{
-            const res = await axios.get(`http://localhost:3000/api/v1/users/wishlist/:${id}`);
+        get:async()=>{
+            const res = await axios.get("http://localhost:3000/api/v1/users/viewwishlist",{
+                headers:{
+                    'Authorization': "Bearer " + localStorage.getItem('token')
+                }
+            });
             return res.data.products
         }
     })
