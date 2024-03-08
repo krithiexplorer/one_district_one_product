@@ -119,8 +119,26 @@ usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
         }
     })
 
+    const cartTotal = () => {
+        let price = 0;
+    
+        cartProducts.forEach((product) => {
+            const productPrice = parseFloat(product.price);
+    
+            if (!isNaN(productPrice)) {
+                price += productPrice;
+            } else {
+                console.error(`Invalid product price for product ID ${product.id}: ${product.price}`);
+            }
+        });
+    
+        return price;
+    };
+    
+
     res.json({
-        products:cartProducts
+        products:cartProducts,
+        cartTotal: cartTotal()
     })
 })
 

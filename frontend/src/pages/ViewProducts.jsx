@@ -23,7 +23,7 @@ export default function ViewProducts() {
         </div>
       );
     case 'hasError':
-      return <div>Error loading cart products</div>;
+      return <div>Error loading products</div>;
     default:
       return null; // Handle other cases if needed
   }

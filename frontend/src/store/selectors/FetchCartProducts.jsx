@@ -11,7 +11,10 @@ export const FetchCartProducts = atom({
                     'Authorization': "Bearer " + localStorage.getItem('token')
                 }
             });
-            return res.data.products
+            return {
+                products: res.data.products,
+                cartTotal: res.data.cartTotal
+            }
         }
     })
 })
