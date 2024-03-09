@@ -15,6 +15,8 @@ import Header from './components/Header';
 import ProductUploadComponent from './pages/AddProduct';
 import { useState, useEffect } from 'react';
 import Logout from './components/Logout';
+import SellerProfile from './pages/SellerProfile';
+import UserProfile from './pages/UserProfile';
 
 
 
@@ -52,11 +54,13 @@ function App() {
                   <Route path="/view_products" element={<ViewProducts />} />
                   <Route path="/filter" element={<FilterBar />} />
                   <Route path="/offers" element={<FilterByOffer />} />
+                  <Route path="/view_profile" element={<UserProfile />} />
                 </>
               )}
               {isSeller && (
                 <>
                   <Route path="/seller/addProduct" element={<ProductUploadComponent />} />
+                  <Route path="/seller/view_profile" element={<SellerProfile />} />
                 </>
               )}
             </>

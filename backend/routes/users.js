@@ -142,4 +142,15 @@ usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
     })
 })
 
+usersRouter.get('/user_details',authMiddleware,async(req,res)=>{
+    const userdetails = await Users.findById(req.userId);
+    const details = {
+        firstName : userdetails.firstName,
+        username : userdetails.username
+    }
+    res.json({
+        details
+    })
+})
+
 module.exports = usersRouter;

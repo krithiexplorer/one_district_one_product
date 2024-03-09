@@ -119,5 +119,17 @@ sellersRouter.get('/details',authMiddleware,async(req,res)=>
     })
 })
 
+sellersRouter.get('/seller_details',authMiddleware,async(req,res)=>{
+    const sellerdetails = await Sellers.find({_id:req.userId});
+    const details = {
+        firstName : sellerdetails.firstName,
+        username : sellerdetails.username
+    }
+    return res.json({
+        details
+    })
+})
+
+
 
 module.exports = sellersRouter;
