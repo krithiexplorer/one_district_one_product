@@ -10,26 +10,25 @@ import SigninSeller from './pages/SigninSeller';
 import SigninBuyer from './pages/SigninBuyer';
 import SignUpSeller from './pages/SignUpSeller';
 import SignUpBuyer from './pages/SignUpBuyer';
-import { RecoilRoot } from 'recoil';
 import Header from './components/Header';
 import ProductUploadComponent from './pages/AddProduct';
-import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { useEffect } from 'react';
 import Logout from './components/Logout';
 import SellerProfile from './pages/SellerProfile';
 import UserProfile from './pages/UserProfile';
-
+import { LoginAtom, SellerAtom } from './store/atoms/StateAtom';
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("token") !== null);
-  const [isSeller, setIsSeller] = useState(localStorage.getItem("seller") === "true");
+  const [isAuthenticated, setIsAuthenticated] = useRecoilState(LoginAtom);
+  const [isSeller, setIsSeller] = useRecoilState(SellerAtom);
 
   useEffect(() => {
     setIsAuthenticated(localStorage.getItem("token") !== null);
     setIsSeller(localStorage.getItem("seller") === "true");
   }, []); 
   return (
-    <RecoilRoot>
       <BrowserRouter>
         <Header />
         <FetchProducts/>
@@ -68,7 +67,6 @@ function App() {
           <Route path="/logout" element={<Logout/>}></Route>
         </Routes>
       </BrowserRouter>
-    </RecoilRoot>
   );
 }
 

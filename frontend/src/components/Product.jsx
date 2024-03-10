@@ -12,11 +12,8 @@ export default function Product({ product }) {
           'Authorization': "Bearer " + localStorage.getItem('token')
         }
       });
-
-      // Handle the response, e.g., show a success message
       console.log(response.data.msg);
     } catch (error) {
-      // Handle errors, e.g., show an error message
       console.error("Error adding to cart:", error.message);
     }
   };
