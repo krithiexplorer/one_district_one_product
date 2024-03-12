@@ -88,13 +88,23 @@ const sellerSchema = new mongoose.Schema({
         required:true
     }
 })
+const balanceSchema = new mongoose.Schema({
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Users',
+    },
+	balance: Number
+})
 
 const Users = mongoose.model('Users',userSchema);
 const Products = mongoose.model('Products',productSchema);
 const Sellers = mongoose.model('Sellers',sellerSchema);
+const Account = mongoose.model('Accounts',balanceSchema);
+
 
 module.exports = {
     Users, 
     Products,
-    Sellers
+    Sellers,
+    Account
 };
