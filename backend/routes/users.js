@@ -5,6 +5,7 @@ const { Products, Users } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
+const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
@@ -63,8 +64,28 @@ usersRouter.post('/signin',async(req,res)=>{
 
 usersRouter.get('/products',async(req,res)=>{
     const products = await Products.find({});
+    const productsWithImages = products.map(product => {
+        const imageUrl =  `data:image/jpeg;base64,${product.image.toString('base64')}`;
+        return {
+            ...product._doc,
+            image:imageUrl
+        }
+    })
+    console.log('Products with images:', productsWithImages);
     return res.json({
-        products
+        products : productsWithImages
+    })
+})
+
+usersRouter.get('/products/:productId',async(req,res)=>{
+    const productId = req.params.productId;
+    const product = await Products.findById(productId);
+    const imageUrl =  `data:image/jpeg;base64,${product.image.toString('base64')}`;
+    return res.json({
+        product:{
+            ...product._doc,
+            image: imageUrl
+        }
     })
 })
 
@@ -84,7 +105,7 @@ usersRouter.put('/wishlist/:productId', authMiddleware, (req, res) => {
 
 usersRouter.get('/viewwishlist',authMiddleware, async(req,res)=>{
     const userId = req.userId;
-    const user = await Users.findOne({_id:userId})
+    const user = await Users.findById(userId)
     const wishlisted = await Products.find({
         _id:{
             "$in":user.wishlistedProducts
@@ -151,6 +172,21 @@ usersRouter.get('/user_details',authMiddleware,async(req,res)=>{
     res.json({
         details
     })
+})
+
+usersRouter.post('/checkout/:productId',authMiddleware,async(req,res)=>{
+    const productId = req.params.productId;
+    const session = await startSession();
+    const product = await Products.findById(productId).session(session);
+    const quantity = product.quantity;
+    if(quantity <= 0)
+    {
+        await session.abortTransaction();
+        return res.status(400).json({
+            msg:"Sorry, This product is sold out, indru poi nalai vaa"
+        })
+    }
+    await Products.findByIdAndUpdate({productId},{$inc:{quantity: -1}}).session(session)
 })
 
 module.exports = usersRouter;

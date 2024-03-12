@@ -18,6 +18,7 @@ import Logout from './components/Logout';
 import SellerProfile from './pages/SellerProfile';
 import UserProfile from './pages/UserProfile';
 import { LoginAtom, SellerAtom } from './store/atoms/StateAtom';
+import ProductDetails from './pages/ProductDetails';
 
 
 function App() {
@@ -43,6 +44,10 @@ function App() {
           <Route path="/signup/seller" element={<SignUpSeller />} />
           <Route path="/signup/buyer" element={<SignUpBuyer />} />
 
+          <Route path="/view_products" element={<ViewProducts />} />
+          <Route path="/product/:productId" element={<ProductDetails />} />
+          <Route path="/filter" element={<FilterBar />} />
+          <Route path="/offers" element={<FilterByOffer />} />
           {/* Other routes accessible to authenticated users */}
           {isAuthenticated && (
             <>
@@ -50,9 +55,6 @@ function App() {
                 <>
                   <Route path="/cart" element={<ViewCart />} />
                   <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/view_products" element={<ViewProducts />} />
-                  <Route path="/filter" element={<FilterBar />} />
-                  <Route path="/offers" element={<FilterByOffer />} />
                   <Route path="/view_profile" element={<UserProfile />} />
                 </>
               )}
