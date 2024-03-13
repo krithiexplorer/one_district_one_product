@@ -135,6 +135,40 @@ usersRouter.put('/cart/:productId', authMiddleware, (req, res) => {
     })
 });
 
+usersRouter.delete('/cart/:productId', authMiddleware, (req, res) => {
+    const productId = req.params.productId;
+    const userId = req.userId;
+    Users.updateOne({ _id: userId }, {
+        "$pull": {
+            cartProducts: productId
+        }
+    }).then(() => {
+        res.json({
+            msg: "Product removed from cart successfully"
+        });
+    }).catch((err) => {
+        console.error("Error removing product from cart:", err);
+        res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+usersRouter.delete('/wishlist/:productId', authMiddleware, (req, res) => {
+    const productId = req.params.productId;
+    const userId = req.userId;
+    Users.updateOne({ _id: userId }, {
+        "$pull": {
+            wishlistedProducts: productId
+        }
+    }).then(() => {
+        res.json({
+            msg: "Product removed from wishlist successfully"
+        });
+    }).catch((err) => {
+        console.error("Error removing product from wishlist:", err);
+        res.status(500).json({ error: "Internal server error" });
+    });
+});
+
 usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
     const userId = req.userId;
     const user = await Users.findOne({_id:userId})

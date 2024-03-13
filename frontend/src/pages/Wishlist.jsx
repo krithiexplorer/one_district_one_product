@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import { FetchWishlistedProducts } from '../store/selectors/FetchWishlistedProducts';
 import { Card } from '@mui/material';
-import Product from '../components/Product';
+import WishListProducts from '../components/WishListProducts';
 
 export default function ViewCart() {
   const wishlistProductsLoadable = useRecoilValueLoadable(FetchWishlistedProducts);
@@ -17,7 +17,7 @@ export default function ViewCart() {
         <div>
           {wishlistedProducts.map((product) => (
             <Card key={product.id}>
-              <Product product={product} />
+              <WishListProducts product={product} />
             </Card>
           ))}
         </div>

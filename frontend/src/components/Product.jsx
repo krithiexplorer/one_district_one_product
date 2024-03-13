@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { CardActionArea, CardContent } from '@mui/material';
+import { Typography, CardContent, CardMedia,Card } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import useStyles from '../assets/styles/ProductStyles'
 
 export default function Product({ product }) {
   const navigate = useNavigate();
+  const classes = useStyles();
 
   const viewDetails = () =>{
     navigate(`/product/${product._id}`)
@@ -45,17 +47,23 @@ export default function Product({ product }) {
 
 
   return (
-    <CardContent>
-        <h1>{product.name}</h1>
-        <h5>Rs.{product.price}</h5>
-        <img src={product.image} alt={product.name} />
-        <CardActionArea>
-        <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToCart}>Add to Cart</button>
-        <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToWishlist}>Add to Wishlist</button>
-        <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails}>View Details</button>
-        </CardActionArea>
-      
-    </CardContent>
+    <Card className={classes.root}>
+        <CardMedia className={classes.media} title={product.name}/>
+        <CardContent>
+          <div className={classes.CardContent}>
+            <Typography variant="h5" gutterBottom>
+              {product.name}
+            </Typography>
+            <Typography variant="h5">
+              Rs.{product.price}
+            </Typography>
+              <img src={product.image} alt={product.name} />
+              <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToCart}>Add to Cart</button>
+              <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToWishlist}>Add to Wishlist</button>
+              <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails}>View Details</button>
+          </div>
+        </CardContent>   
+    </Card>
   );
 }
 

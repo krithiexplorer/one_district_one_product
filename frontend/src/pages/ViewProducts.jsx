@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import { Card } from '@mui/material';
+import { Grid } from '@mui/material';
 import Product from '../components/Product';
 import { ProductsAtom } from '../store/atoms/ProductAtom';
 
@@ -15,11 +15,13 @@ export default function ViewProducts() {
 
       return (
         <div>
-          {products.map((product) => (
-            <Card key={product.id}>
-              <Product product={product} />
-            </Card>
-          ))}
+          <Grid container justify="center" spacing={4}>
+            {products.map((product) => (
+              <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                <Product product={product} />
+              </Grid>
+            ))}
+          </Grid>
         </div>
       );
     case 'hasError':
