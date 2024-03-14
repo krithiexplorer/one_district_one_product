@@ -10,7 +10,7 @@ export default function Filter() {
     <div>
         {filteredProducts.map((product)=>{
             return <>
-                <Card key={product.id} variant="outlined">
+                <Card key={product._id} variant="outlined">
                     <Product product={product}/>
                 </Card>
             </>

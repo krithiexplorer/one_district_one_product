@@ -66,25 +66,32 @@ usersRouter.post('/signin',async(req,res)=>{
  
 })
 
-usersRouter.get('/products',async(req,res)=>{
-    const products = await Products.find({});
-    const productsWithImages = products.map(product => {
-        const imageUrl =  `data:image/jpeg;base64,${product.image.toString('base64')}`;
+
+usersRouter.get('/products', async (req, res) => {
+    try {
+      const products = await Products.find({});
+      const productsWithImages = products.map(product => {
+        const imageUrl = `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
+        
         return {
-            ...product._doc,
-            image:imageUrl
+          ...product._doc,
+          image: imageUrl
         }
-    })
-    console.log('Products with images:', productsWithImages);
-    return res.json({
-        products : productsWithImages
-    })
-})
+      });
+      
+      //console.log('Products with images:', productsWithImages);
+      return res.json({ products: productsWithImages });
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
 
 usersRouter.get('/products/:productId',async(req,res)=>{
     const productId = req.params.productId;
     const product = await Products.findById(productId);
-    const imageUrl =  `data:image/jpeg;base64,${product.image.toString('base64')}`;
+    const imageUrl =  `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
     return res.json({
         product:{
             ...product._doc,

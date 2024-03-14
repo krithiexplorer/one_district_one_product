@@ -20,7 +20,7 @@ export default function ViewCart() {
         <div className='flex justify-between'>
             <div className='w-3/4'>
               {cartProducts.map((product) => (
-                <Card key={product.id}>
+                <Card key={product._id}>
                   <CartProducts product={product} />
                 </Card>
               ))}
