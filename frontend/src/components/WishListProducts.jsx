@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent,CardMedia,Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 import axios from 'axios';
 
 export default function WishListProducts({ product }) {
@@ -18,7 +19,10 @@ export default function WishListProducts({ product }) {
           'Authorization': "Bearer " + localStorage.getItem('token')
         }
       });
-      console.log(response.data.msg);
+      if(response)
+      {
+        toast.success("Product added to wishlist")
+      }
     } catch (error) {
       console.error("Error adding to cart:", error.message);
     }
@@ -30,14 +34,14 @@ export default function WishListProducts({ product }) {
           'Authorization': "Bearer " + localStorage.getItem('token')
         }
       }).then(res => {
-        return <h4>Removed</h4>
+        toast.error("Item removed from wishlist")
       })
   }
   return (
-    <Card className={classes.root}>
-    <CardMedia className={classes.media} title={product.name}/>
+    <Card>
+    <CardMedia title={product.name}/>
     <CardContent>
-      <div className={classes.CardContent}>
+      <div>
         <Typography variant="h5" gutterBottom>
           {product.name}
         </Typography>
@@ -49,10 +53,10 @@ export default function WishListProducts({ product }) {
           <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails}>View Details</button>
           <button className=' text-white bg-red-600 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={removeProduct}>Remove Product</button>
       </div>
-      <Typography variant="h3" color="InfoText">
+      <Typography variant="h6" color="InfoText">
         {product.description}
       </Typography>
-      <Typography variant="h4" color="InfoText">
+      <Typography variant="h6" color="InfoText">
         Love from: {product.district}
       </Typography>
     </CardContent>   

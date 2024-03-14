@@ -4,6 +4,8 @@ import { useRecoilValueLoadable } from 'recoil';
 import { Card } from '@mui/material';
 import { ButtonComponent } from '../components/ButtonComponent';
 import CartProducts from '../components/CartProducts';
+import EmptyCart from '../components/EmptyCart';
+import PayButton from '../components/PayButton';
 
 export default function ViewCart() {
   const cartProductsLoadable = useRecoilValueLoadable(FetchCartProducts);
@@ -32,7 +34,7 @@ export default function ViewCart() {
                   </>
                 })}
                 <h4>Amount Payable: Rs.{cartProductsLoadable.contents.cartTotal}</h4>
-                <ButtonComponent buttonname={"Proceed to checkout"} />
+                <PayButton cartProducts={cartProducts}/>
               </Card>
             </div>
         </div>
@@ -40,6 +42,6 @@ export default function ViewCart() {
     case 'hasError':
       return <div>Error loading cart products</div>;
     default:
-      return null; // Handle other cases if needed
+      return <EmptyCart/>
   }
 }

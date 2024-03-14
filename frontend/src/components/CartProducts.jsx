@@ -2,6 +2,7 @@ import React from 'react';
 import { CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 export default function CartProducts({ product }) {
   const productId = product._id;
@@ -17,7 +18,7 @@ export default function CartProducts({ product }) {
           'Authorization': "Bearer " + localStorage.getItem('token')
         }
       }).then(res => {
-        return <h4>Removed</h4>
+        toast.error("Product removed from cart")
       })
   }
   return (

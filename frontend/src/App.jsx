@@ -19,6 +19,9 @@ import SellerProfile from './pages/SellerProfile';
 import UserProfile from './pages/UserProfile';
 import { LoginAtom, SellerAtom } from './store/atoms/StateAtom';
 import ProductDetails from './pages/ProductDetails';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CheckoutSuccess from './components/CheckoutSuccess';
 
 
 function App() {
@@ -30,6 +33,7 @@ function App() {
     setIsSeller(localStorage.getItem("seller") === "true");
   }, []); 
   return (
+    <div>
       <BrowserRouter>
         <Header />
         <FetchProducts/>
@@ -56,6 +60,7 @@ function App() {
                   <Route path="/cart" element={<ViewCart />} />
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/view_profile" element={<UserProfile />} />
+                  <Route path="/purchase-success" element={<CheckoutSuccess/>}/>
                 </>
               )}
               {isSeller && (
@@ -69,6 +74,19 @@ function App() {
           <Route path="/logout" element={<Logout/>}></Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      </div>
   );
 }
 

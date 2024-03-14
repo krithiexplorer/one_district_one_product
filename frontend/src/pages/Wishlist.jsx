@@ -3,6 +3,7 @@ import { useRecoilValueLoadable } from 'recoil';
 import { FetchWishlistedProducts } from '../store/selectors/FetchWishlistedProducts';
 import { Card } from '@mui/material';
 import WishListProducts from '../components/WishListProducts';
+import EmptyWishlist from '../components/EmptyWishlist';
 
 export default function ViewCart() {
   const wishlistProductsLoadable = useRecoilValueLoadable(FetchWishlistedProducts);
@@ -25,6 +26,6 @@ export default function ViewCart() {
     case 'hasError':
       return <div>Error loading cart products</div>;
     default:
-      return null; // Handle other cases if needed
+      return <EmptyWishlist/>
   }
 }
