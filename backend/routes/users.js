@@ -171,33 +171,14 @@ usersRouter.delete('/wishlist/:productId', authMiddleware, (req, res) => {
 
 usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
     const userId = req.userId;
-    const user = await Users.findOne({_id:userId})
+    const user = await Users.findById(userId);
     const cartProducts = await Products.find({
         _id:{
             "$in":user.cartProducts
         }
     })
-
-    const cartTotal = () => {
-        let price = 0;
-    
-        cartProducts.forEach((product) => {
-            const productPrice = parseFloat(product.price);
-    
-            if (!isNaN(productPrice)) {
-                price += productPrice;
-            } else {
-                console.error(`Invalid product price for product ID ${product.id}: ${product.price}`);
-            }
-        });
-    
-        return price;
-    };
-    
-
     res.json({
-        products:cartProducts,
-        cartTotal: cartTotal()
+        products:cartProducts
     })
 })
 
@@ -235,5 +216,6 @@ usersRouter.post('/checkout/:productId',authMiddleware,async(req,res)=>{
     });  
 
 })
+
 
 module.exports = usersRouter;

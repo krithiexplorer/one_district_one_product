@@ -3,6 +3,7 @@ import { CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
 
 export default function CartProducts({ product }) {
   const productId = product._id;
@@ -28,7 +29,7 @@ export default function CartProducts({ product }) {
         <img src={product.image} alt={product.name} />
         <CardActionArea>
         <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails} >View Details</button>
-        <button className=' text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={removeProduct} >Remove Product</button>
+        <button className=' text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={removeProduct} ><FaTrash /></button>
         </CardActionArea>      
     </CardContent>
   );

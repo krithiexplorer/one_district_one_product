@@ -8,6 +8,7 @@ export default function CheckoutSuccess() {
     {
         navigate("/view_products")
     }
+
   return (
     <div className='flex justify-center'>
         <Typography variant="h3">
