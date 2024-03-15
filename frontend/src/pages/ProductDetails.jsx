@@ -20,11 +20,11 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-
   return (
     <div>
     <Card>
-    <CardMedia title={product.name}/>
+    <CardMedia 
+           title={product.name}/>
     <CardContent>
       <div>
         <Typography variant="h5" gutterBottom>
