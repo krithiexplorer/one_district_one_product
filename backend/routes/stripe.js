@@ -5,7 +5,6 @@ const { default: Stripe } = require('stripe');
 const stripe = Stripe('sk_test_51Ou9vHSFYhTczrb57NBykYSEw0LO606o0tkM2KD78uRA9rJRGBVri8TEnW9xpwmCad8r9ccBEjixyT2hTGPR6U9E00MNCivQGE')
 
 stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) => {
-
     const line_items = req.body.checkoutItems.map((item)=>{
         return { price_data : {
             currency: 'inr',
@@ -14,20 +13,20 @@ stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) =>
             },
             unit_amount: item.price * 100,
           },
-          quantity: item.qty,
+          quantity: item.qty
         }
     })
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
-      success_url: 'http://localhost:5173/purchase-success',
+      success_url: `http://localhost:5173/purchase-success?products=${req.body.checkoutItems}`,
       cancel_url: 'http://localhost:5173/cart',
     });
   
     res.json({
         url: session.url
     });
-  });
+});
 
 
-  module.exports = stripeRouter
+module.exports = stripeRouter

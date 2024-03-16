@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import { FetchWishlistedProducts } from '../store/selectors/FetchWishlistedProducts';
-import { Card } from '@mui/material';
+import { Grid } from '@mui/material';
 import WishListProducts from '../components/WishListProducts';
 import EmptyWishlist from '../components/EmptyWishlist';
 
@@ -15,12 +15,14 @@ export default function ViewCart() {
       const wishlistedProducts = wishlistProductsLoadable.contents;
 
       return (
-        <div>
-          {wishlistedProducts.map((product) => (
-            <Card key={product.id}>
-              <WishListProducts product={product} />
-            </Card>
-          ))}
+        <div className='p-5 bg-slate-200 h-screen'>
+          <Grid container justify="center" spacing={4}>
+            {wishlistedProducts.map((product) => (
+              <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
+                <WishListProducts product={product} />
+              </Grid>
+            ))}
+          </Grid>
         </div>
       );
     case 'hasError':

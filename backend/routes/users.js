@@ -123,8 +123,17 @@ usersRouter.get('/viewwishlist',authMiddleware, async(req,res)=>{
         }
     })
 
+    const wishlistedWithImages = wishlisted.map(product => {
+        const imageUrl = `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
+        
+        return {
+          ...product._doc,
+          image: imageUrl
+        }
+      });
+
     res.json({
-        products:wishlisted
+        products:wishlistedWithImages
     })
 })
 
@@ -184,8 +193,17 @@ usersRouter.get('/viewcart',authMiddleware, async(req,res)=>{
             "$in":user.cartProducts
         }
     })
+
+    const cartWithImages = cartProducts.map(product => {
+        const imageUrl = `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
+        
+        return {
+          ...product._doc,
+          image: imageUrl
+        }
+      });
     res.json({
-        products:cartProducts
+        products:cartWithImages
     })
 })
 

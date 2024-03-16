@@ -11,30 +11,29 @@ export default function Header() {
   
   return (
     <div>
-      <div className="bg-slate-900 flex justify-between">
+      <div className="bg-red-700">
         <div>
-          <Button onClick={() => { navigate("/") }}>Home</Button>
-          <Button onClick={() => { navigate("/view_products") }}>Shop</Button>
-          <Button onClick={() => { navigate("/filter") }}>Filter</Button>
-          <Button onClick={() => { navigate("/offers") }}>Offers</Button>
+          <button className='border-transparent text-white p-2' onClick={() => { navigate("/") }}>Home</button>
+          <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products") }}>Shop</button>
+          <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter") }}>Filter</button>
+          <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers") }}>Offers</button>
           {isAuthenticated && (
             <>
-              {isSeller && (
-                <>
-                  <Button onClick={() => { navigate("/seller/view_profile") }}>Seller Profile</Button>
-                  <Button onClick={() => { navigate("/seller/addProduct") }}>Add Product</Button>
-                </>
-              )}
-              {!isSeller && (
-                <>
-                  <Button onClick={() => { navigate("/view_profile") }}>Buyer Profile</Button>
-                  <Button onClick={() => { navigate("/cart") }}>Cart</Button>
-                  <Button onClick={() => { navigate("/wishlist") }}>WishList</Button>
-                </>
-              )}
-              <div>
-                <Button onClick={() => { navigate("/logout") }}>Logout</Button>
-              </div>
+                  {isSeller && (
+                    <>
+                      <button className='border-transparent text-white p-2'onClick={() => { navigate("/seller/view_profile") }}>Seller Profile</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/seller/addProduct") }}>Add Product</button>
+                    </>
+                  )}
+                  {!isSeller && (
+                    <>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile") }}>Buyer Profile</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart") }}>Cart</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist") }}>WishList</button>
+                    </>
+                  )}
+                  <button className='border-transparent text-white p-2' onClick={() => { navigate("/logout") }}>Logout</button>
+              
             </>
           )}
         </div>

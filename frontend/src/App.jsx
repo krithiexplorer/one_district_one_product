@@ -22,7 +22,7 @@ import ProductDetails from './pages/ProductDetails';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutSuccess from './components/CheckoutSuccess';
-
+import Home from './pages/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(LoginAtom);
@@ -38,8 +38,11 @@ function App() {
         <Header />
         <FetchProducts/>
         <Routes>
-          <Route path="/" element={<Landing/>} />
-
+          {isAuthenticated ? (
+            <Route path="/" element={<Home />} />
+          ) : (
+            <Route path="/" element={<Landing />} />
+          )}
           {/* Authentication Routes */}
           <Route path="/signin/seller" element={<SigninSeller />} />
           <Route path="/signin/buyer" element={<SigninBuyer />} />

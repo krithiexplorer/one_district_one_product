@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, CardContent,CardMedia,Typography } from '@mui/material';
+import { Card, CardContent,CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import axios from 'axios';
+import { FaTrash } from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa";
 
 export default function WishListProducts({ product }) {
   const productId = product._id;
@@ -38,28 +40,20 @@ export default function WishListProducts({ product }) {
       })
   }
   return (
-    <Card>
-    <CardMedia title={product.name}/>
-    <CardContent>
-      <div>
-        <Typography variant="h5" gutterBottom>
-          {product.name}
-        </Typography>
-        <Typography variant="h5">
-          Rs.{product.price}
-        </Typography>
-          <img src={product.image} alt={product.name} />
-          <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToCart}>Add to Cart</button>
-          <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails}>View Details</button>
-          <button className=' text-white bg-red-600 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={removeProduct}>Remove Product</button>
-      </div>
-      <Typography variant="h6" color="InfoText">
-        {product.description}
-      </Typography>
-      <Typography variant="h6" color="InfoText">
-        Love from: {product.district}
-      </Typography>
-    </CardContent>   
-</Card>
+    <div>
+      <Card>
+       <CardContent>
+        <h1>{product.name}</h1>
+        <h5>Rs.{product.price}</h5>
+        <img className='w-60 h-60' src={product.image} alt={product.name} />
+        <CardActionArea>
+        <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToCart}><FaCartArrowDown /></button>
+        <button className=' text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={removeProduct}><FaTrash /></button>
+        <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewDetails}>View Details</button>
+        </CardActionArea>
+      </CardContent>
+    </Card>
+    </div>
+    
   );
 }

@@ -14,7 +14,7 @@ export default function ViewProducts() {
       const products = ProductsLoadable.contents;
 
       return (
-        <div>
+        <div className='p-5 bg-slate-200 h-screen'>
           <Grid container justify="center" spacing={4}>
             {products.map((product) => (
               <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>

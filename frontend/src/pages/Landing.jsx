@@ -1,10 +1,16 @@
-import { Button } from '@mui/material';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ButtonWarning } from '../components/ButtonWarning';
+import { useRecoilValue } from 'recoil';
+import { LoginAtom } from '../store/atoms/StateAtom';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const login = useRecoilValue(LoginAtom);
+  if (login) {
+    return <Home />;
+  }
+
   return (
     <div className='h-screen flex'>
       <div className='w-1/2 h-auto bg-slate-400 flex justify-center items-center'>

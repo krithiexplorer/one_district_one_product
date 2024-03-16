@@ -43,21 +43,23 @@ export default function ViewCart() {
       }
 
       return (
-        <div className='flex justify-between'>
-            <div className='w-3/4'>
+        <div className='flex justify-between bg-slate-200 h-screen'>
+            <div className='w-3/4 p-2'>
               {cartProducts.map((product) => (
-                <Card key={product._id}>
-                  <CartProducts product={product} />
-                  <CardContent>
-                  Select Quantity:
-                  <input
-                    type="number"
-                    value={quantities[product._id] || 1}
-                    onChange={(e) => updateQuantity(product._id, parseInt(e.target.value))}
-                    min={1}
-                  />
-                  </CardContent>
-                </Card>
+                <div className='p-2'>
+                  <Card key={product._id}>
+                    <CartProducts product={product} />
+                    <CardContent>
+                    Select Quantity:
+                    <input
+                      type="number"
+                      value={quantities[product._id] || 1}
+                      onChange={(e) => updateQuantity(product._id, parseInt(e.target.value))}
+                      min={1}
+                    />
+                    </CardContent>
+                  </Card>
+                </div>
               ))}
             </div>
             <div className='w-1/4 p-5'>
