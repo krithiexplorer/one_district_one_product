@@ -5,11 +5,20 @@ const { default: Stripe } = require('stripe');
 const stripe = Stripe('sk_test_51Ou9vHSFYhTczrb57NBykYSEw0LO606o0tkM2KD78uRA9rJRGBVri8TEnW9xpwmCad8r9ccBEjixyT2hTGPR6U9E00MNCivQGE')
 
 stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) => {
+    const customer = await stripe.customers.create({
+      metadata:{
+        userId: req.userId,
+        cart:JSON.stringify(req.body.checkoutItems)
+      }
+    })
     const line_items = req.body.checkoutItems.map((item)=>{
         return { price_data : {
             currency: 'inr',
             product_data: {
               name: item.name,
+              metadata:{
+                id:item.id
+              }
             },
             unit_amount: item.price * 100,
           },
@@ -68,6 +77,7 @@ stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) =>
     phone_number_collection: {
       enabled: true,
     },
+      customer:customer.id,
       line_items,
       mode: 'payment',
       success_url: `http://localhost:5173/purchase-success`,
@@ -78,6 +88,52 @@ stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) =>
         url: session.url
     });
 });
+
+let endpointSecret = "whsec_8a4a4a6f59be410d0ad73ac2bafb70a2a55bd6a28f3ca2576a22c987634816c9";
+
+stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  let data;
+  let eventType;
+
+  const payload = req.body;
+  const payloadString = JSON.stringify(payload, null, 2);
+  const header = stripe.webhooks.generateTestHeaderString({
+    payload: payloadString,
+    secret: endpointSecret
+  });
+  if(endpointSecret)
+  {
+    let event;
+    const sig = req.headers['stripe-signature'];
+    try {
+      event = stripe.webhooks.constructEvent(payloadString, header, endpointSecret);
+    } catch (err) {
+      console.log(err.message);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    data = event.data.object;
+    eventType = event.type;
+  }
+  else{
+    data = req.body.data.object;
+    eventType = req.body.type;
+  }
+
+  if(eventType === "checkout.session.completed")
+  {
+      stripe.customers.retrieve(data.customer).then((customer)=>{
+        console.log("data:",data);
+      }).catch((err)=>{
+        console.log(err.message);
+      })
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.send(200).end();
+});
+
 
 
 module.exports = stripeRouter
