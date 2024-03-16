@@ -6,7 +6,7 @@ const { authMiddleware } = require("../middleware");
 
 orderRouter.get('/purchase-success',authMiddleware, async (req, res) => {
     const userId = req.userId;
-    const products = req.query.products; 
+    const products = JSON.parse(req.query.products);  
 
     try {
         for (const product of products) {
