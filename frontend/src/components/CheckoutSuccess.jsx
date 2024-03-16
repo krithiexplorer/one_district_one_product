@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 export default function CheckoutSuccess() {
@@ -7,7 +7,7 @@ export default function CheckoutSuccess() {
   const {message, setMessage} = useState("");
   useEffect(() => {
     if (products) {
-      axios.get(`http://localhost:3000/api/v1/orders/purchase-success?products=${products}`)
+      axios.get(`http://localhost:3000/api/v1/orders/purchase-success?products=${encodeURIComponent(JSON.stringify(products))}`)
         .then(response => {
           setMessage(response.data.message);
         })
@@ -22,7 +22,6 @@ export default function CheckoutSuccess() {
         <Typography variant="h3">
             Product Purchase Success {message}
         </Typography>
-        <button className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={navigateToHome}>Continue Shopping</button>
         
     </div>
   )
