@@ -34,7 +34,7 @@ export default function ViewCart() {
   
   switch (cartProductsLoadable.state) {
     case 'loading':
-      return <div>Loading...</div>;
+      return <div>Loading...</div>;//use spinner
     case 'hasValue':
       const cartProducts = cartProductsLoadable.contents.products;
 

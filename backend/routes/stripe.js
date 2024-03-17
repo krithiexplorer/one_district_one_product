@@ -2,6 +2,7 @@ const express = require('express');
 const stripeRouter = express.Router();
 const { authMiddleware } = require('../middleware');
 const { default: Stripe } = require('stripe');
+const { Orders } = require('../db');
 const stripe = Stripe('sk_test_51Ou9vHSFYhTczrb57NBykYSEw0LO606o0tkM2KD78uRA9rJRGBVri8TEnW9xpwmCad8r9ccBEjixyT2hTGPR6U9E00MNCivQGE')
 
 stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) => {
@@ -89,6 +90,25 @@ stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) =>
     });
 });
 
+async function createOrder(customer, data)
+{
+    const Items = JSON.parse(customer.metadata.cart);
+    const products = Items.map(item => ({
+      productId: item.id,
+      quantity: item.qty
+    }));
+    const newOrder = await Orders.create({
+      userId: customer.metadata.userId,
+      customerId: data.customer,
+      paymentId: data.payment_intent,
+      products:products
+    })
+    if(newOrder)
+    {
+      console.log(newOrder)
+    }
+}
+
 let endpointSecret = "whsec_8a4a4a6f59be410d0ad73ac2bafb70a2a55bd6a28f3ca2576a22c987634816c9";
 
 stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
@@ -124,7 +144,7 @@ stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res
   if(eventType === "checkout.session.completed")
   {
       stripe.customers.retrieve(data.customer).then((customer)=>{
-        console.log("data:",data);
+        createOrder(customer, data);
       }).catch((err)=>{
         console.log(err.message);
       })
