@@ -90,10 +90,10 @@ const sellerSchema = new mongoose.Schema({
 })
 
 const ordersSchema = new mongoose.Schema({
-    userId: [{
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
-    }],
+    },
     customerId: String,
     paymentIntentId: String,
     products: [{

@@ -5,6 +5,7 @@ import { Card, CardContent } from '@mui/material';
 import CartProducts from '../components/CartProducts';
 import EmptyCart from '../components/EmptyCart';
 import PayButton from '../components/PayButton';
+import ClockLoader from "react-spinners/ClockLoader";
 
 export default function ViewCart() {
   const cartProductsLoadable = useRecoilValueLoadable(FetchCartProducts);
@@ -34,7 +35,7 @@ export default function ViewCart() {
   
   switch (cartProductsLoadable.state) {
     case 'loading':
-      return <div>Loading...</div>;//use spinner
+      return <ClockLoader color="#36d7b7" />//use spinner
     case 'hasValue':
       const cartProducts = cartProductsLoadable.contents.products;
 

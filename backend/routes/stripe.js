@@ -2,7 +2,7 @@ const express = require('express');
 const stripeRouter = express.Router();
 const { authMiddleware } = require('../middleware');
 const { default: Stripe } = require('stripe');
-const { Orders } = require('../db');
+const { Orders, Users, Products } = require('../db');
 const stripe = Stripe('sk_test_51Ou9vHSFYhTczrb57NBykYSEw0LO606o0tkM2KD78uRA9rJRGBVri8TEnW9xpwmCad8r9ccBEjixyT2hTGPR6U9E00MNCivQGE')
 
 stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) => {
@@ -109,6 +109,29 @@ async function createOrder(customer, data)
     }
 }
 
+async function updateProductTable(customer){
+  const Items = JSON.parse(customer.metadata.cart);
+    const products = Items.map(item => ({
+      productId: item.id,
+      quantity: item.qty
+    }));
+    const updatePromises = products.map(async (product) => {
+      await Products.updateOne(
+        { _id: product.productId },
+        { $inc: { quantity: -product.quantity } }
+      );
+      console.log("Product quantity updated");
+    });
+
+    await Promise.all(updatePromises);  
+
+}
+
+async function emptyCart(customer){
+  const userId = customer.metadata.userId;
+  await Users.updateOne({ _id: userId }, { $set: { cartProducts: [] } });
+}
+
 let endpointSecret = "whsec_8a4a4a6f59be410d0ad73ac2bafb70a2a55bd6a28f3ca2576a22c987634816c9";
 
 stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
@@ -145,12 +168,12 @@ stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res
   {
       stripe.customers.retrieve(data.customer).then((customer)=>{
         createOrder(customer, data);
+        updateProductTable(customer);
+        emptyCart(customer);
       }).catch((err)=>{
         console.log(err.message);
       })
   }
-
-  // Return a 200 response to acknowledge receipt of the event
   res.send(200).end();
 });
 

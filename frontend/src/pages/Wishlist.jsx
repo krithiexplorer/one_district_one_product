@@ -4,13 +4,15 @@ import { FetchWishlistedProducts } from '../store/selectors/FetchWishlistedProdu
 import { Grid } from '@mui/material';
 import WishListProducts from '../components/WishListProducts';
 import EmptyWishlist from '../components/EmptyWishlist';
+import ClockLoader from "react-spinners/ClockLoader";
+
 
 export default function ViewCart() {
   const wishlistProductsLoadable = useRecoilValueLoadable(FetchWishlistedProducts);
 
   switch (wishlistProductsLoadable.state) {
     case 'loading':
-      return <div>Loading...</div>;
+      return <ClockLoader color="#36d7b7" />;
     case 'hasValue':
       const wishlistedProducts = wishlistProductsLoadable.contents;
 
