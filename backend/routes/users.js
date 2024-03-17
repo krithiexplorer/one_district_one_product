@@ -1,11 +1,11 @@
 const express = require("express");
 const usersRouter = express.Router();
 const { authMiddleware } = require("../middleware");
-const { Products, Users, Account } = require("../db");
+const { Products, Users} = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
-const { startSession } = require("mongoose");
+// const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
@@ -15,17 +15,22 @@ usersRouter.post('/signup',async(req,res)=>{
     const existingUser = await Users.findOne({
         username:user.username
     })
-    if(!success || existingUser){
+    if(!success){
         return  res.status(422).json({
-            msg:"Email already taken / Incorrect inputs"
+            msg:"Incorrect inputs"
+        })
+    }
+    if(existingUser){
+        return res.status(409).json({
+            msg:"user already exists"
         })
     }
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
-    await Account.create({
-        userId,
-        balance:  Math.floor(Math.random() * 10000)
-    })
+    // await Account.create({
+    //     userId,
+    //     balance:  Math.floor(Math.random() * 10000)
+    // })
     if(currentUser){
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
@@ -218,29 +223,29 @@ usersRouter.get('/user_details',authMiddleware,async(req,res)=>{
     })
 })
 
-usersRouter.post('/checkout/:productId',authMiddleware,async(req,res)=>{
-    const productId = req.params.productId;
-    const session = await startSession();
-    const product = await Products.findById(productId).session(session);
-    const account = await Account.findOne({ userId: req.userId }).session(session);
-    const quantity = product.quantity;
-    const amount = product.amount; // cost of product  should be added in Product db
-    session.startTransaction();
-    if(quantity <= 0 || !account || account.balance < amount)
-    {
-        await session.abortTransaction();
-        return res.status(400).json({
-            msg:"Sorry, This product is sold out, indru poi nalai vaa"
-        })
-    }
-    await Products.updateOne({productId},{$inc:{quantity: -1}}).session(session)
-    await Account.updateOne({ userId: req.userId },{ $inc: { balance: -amount } }).session(session);  
-    await session.commitTransaction();
-    res.json({
-        message: "Order Placed"
-    });  
+// usersRouter.post('/checkout/:productId',authMiddleware,async(req,res)=>{
+//     const productId = req.params.productId;
+//     const session = await startSession();
+//     const product = await Products.findById(productId).session(session);
+//     const account = await Account.findOne({ userId: req.userId }).session(session);
+//     const quantity = product.quantity;
+//     const amount = product.amount; // cost of product  should be added in Product db
+//     session.startTransaction();
+//     if(quantity <= 0 || !account || account.balance < amount)
+//     {
+//         await session.abortTransaction();
+//         return res.status(400).json({
+//             msg:"Sorry, This product is sold out, indru poi nalai vaa"
+//         })
+//     }
+//     await Products.updateOne({productId},{$inc:{quantity: -1}}).session(session)
+//     await Account.updateOne({ userId: req.userId },{ $inc: { balance: -amount } }).session(session);  
+//     await session.commitTransaction();
+//     res.json({
+//         message: "Order Placed"
+//     });  
 
-})
+// })
 
 
 module.exports = usersRouter;

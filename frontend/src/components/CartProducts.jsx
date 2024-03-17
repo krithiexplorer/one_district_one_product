@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,9 +8,10 @@ import { FaTrash } from "react-icons/fa";
 export default function CartProducts({ product }) {
   const productId = product._id;
   const navigate = useNavigate();  
-
+  
   const viewDetails = () =>{
     navigate(`/product/${productId}`)
+    window.location.reload();
   }
 
   const removeProduct = () =>{
@@ -18,8 +19,11 @@ export default function CartProducts({ product }) {
         headers:{
           'Authorization': "Bearer " + localStorage.getItem('token')
         }
-      }).then(res => {
+      }).then(()=>{
         toast.error("Product removed from cart")
+        setTimeout(()=>{
+          window.location.reload();
+        },2000)
       })
   }
   return (

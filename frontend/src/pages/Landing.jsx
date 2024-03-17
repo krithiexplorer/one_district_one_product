@@ -13,7 +13,7 @@ export default function Landing() {
 
   return (
     <div className='h-screen flex'>
-      <div className='w-1/2 h-auto bg-slate-400 flex justify-center items-center'>
+      <div className='w-1/2 h-auto bg-cyan-200 flex justify-center items-center'>
         <div className='text-center'>
         <h2>Are you a seller</h2>
           <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={()=>{
@@ -22,7 +22,7 @@ export default function Landing() {
           <ButtonWarning text={"Already have an account? "} buttonText={"Sign In"}  to={"/signin/seller"}/>
         </div>
       </div>
-      <div className='w-1/2 h-auto bg-slate-600 flex justify-center items-center'>
+      <div className='w-1/2 h-auto bg-cyan-300 flex justify-center items-center'>
         <div className='text-center'>
         <h2>Are you a buyer</h2>
           <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={()=>{
