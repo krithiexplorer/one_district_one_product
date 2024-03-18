@@ -90,22 +90,28 @@ const sellerSchema = new mongoose.Schema({
 })
 
 const ordersSchema = new mongoose.Schema({
-    userId:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Users'
-    }],
-    productId:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Products'
-    }],
-    quantity: Number
-})
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    },
+    customerId: String,
+    paymentIntentId: String,
+    products: [{
+        productId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Products'
+        },
+        quantity: {
+            type: Number,
+            default: 1
+        }
+    }]
+}, { timestamps: true });
 
 const Users = mongoose.model('Users',userSchema);
 const Products = mongoose.model('Products',productSchema);
 const Sellers = mongoose.model('Sellers',sellerSchema);
 const Orders = mongoose.model('Orders',ordersSchema);
-
 
 module.exports = {
     Users, 
