@@ -35,7 +35,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        {  isAuthenticated && <><Header /></>}
         <FetchProducts/>
         <Routes>
           {isAuthenticated ? (

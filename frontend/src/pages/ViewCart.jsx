@@ -49,7 +49,7 @@ export default function ViewCart() {
               {cartProducts.map((product) => (
                 <div className='p-2'>
                   <Card key={product._id}>
-                    <CartProducts product={product} />
+                    <CartProducts product={product}  />
                     <CardContent>
                     Select Quantity:
                     <input

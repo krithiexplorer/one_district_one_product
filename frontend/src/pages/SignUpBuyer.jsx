@@ -6,6 +6,9 @@ import { ButtonWarning } from "../components/ButtonWarning";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export default function SignUpBuyer(){
@@ -32,19 +35,31 @@ export default function SignUpBuyer(){
             }}  label={"Email"} placeholder="john@example.com"/>
             <InputBox onChange={e=>{
                 setPassword(e.target.value);
-            }} label={"Password"} placeholder="12234"/>
-            <ButtonComponent onClick={ async () => {
-            const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
-              username,
-              firstName,
-              lastName,
-              password
-            });       
-            localStorage.setItem("token",response.data.token);
-            localStorage.setItem("seller",response.data.seller);
+            }} label={"Password"} placeholder="123456"/>
+          <ButtonComponent onClick={async () => {
+                    try {
+                        const response = await axios.post("http://localhost:3000/api/v1/users/signup", {
+                        username,
+                        firstName,
+                        lastName,
+                        password
+                        });
+                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("seller", response.data.seller);
+                        navigate("/view_products");
+                        } catch (error) {
+                            if (error.response) {
+                            if (error.response.status === 409) {
+                                toast.error(error.response.data.msg);
+                            } else if(error.response.status === 422){
+                                toast.error(error.response.data.msg);
+                            }
+                            } else {
+                            toast.error("Network error");
+                            }
+                        }
+                        }} buttonname={"Sign up"} />
 
-            navigate("/view_products");
-            }} buttonname={"Sign up"}  />
             <ButtonWarning text={"Already have an account? "} buttonText={"Sign In"}  to={"/signin"}/>
         </div>
        </div>

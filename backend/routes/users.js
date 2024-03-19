@@ -5,7 +5,7 @@ const { Products, Users } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
-const { startSession } = require("mongoose");
+// const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
@@ -15,17 +15,22 @@ usersRouter.post('/signup',async(req,res)=>{
     const existingUser = await Users.findOne({
         username:user.username
     })
-    if(!success || existingUser){
+    if(!success){
         return  res.status(422).json({
-            msg:"Email already taken / Incorrect inputs"
+            msg:"Incorrect inputs"
+        })
+    }
+    if(existingUser){
+        return res.status(409).json({
+            msg:"user already exists"
         })
     }
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
-    await Account.create({
-        userId,
-        balance:  Math.floor(Math.random() * 10000)
-    })
+    // await Account.create({
+    //     userId,
+    //     balance:  Math.floor(Math.random() * 10000)
+    // })
     if(currentUser){
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
