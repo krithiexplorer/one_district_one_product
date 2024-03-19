@@ -4,8 +4,6 @@ import { Button, Typography } from '@mui/material';
 import { FetchSellerDetails } from '../store/selectors/FetchSellerDetails';
 import { useRecoilState } from 'recoil';
 import { toast } from "react-toastify";
-import { ButtonComponent } from '../components/ButtonComponent';
-
 
 const ProductUploadComponent = () => {
 
