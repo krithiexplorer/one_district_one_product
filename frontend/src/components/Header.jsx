@@ -15,14 +15,19 @@ export default function Header() {
     <div>
       <div className="bg-red-700">
         <div>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/");
-           reload(); }}>Home</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products");
-        reload(); }}>Shop</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter");
-        reload(); }}>Filter</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers");
-        reload(); }}>Offers</button>
+          {!isAuthenticated && (
+            <>
+            {!isSeller && (
+              <>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/"); reload(); }}>Home</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products"); reload();}}>Shop</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter"); reload(); }}>Filter</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers"); reload(); }}>Offers</button>
+              </>
+            )}
+            </>
+          )}
+
           {isAuthenticated && (
             <>
                   {isSeller && (
@@ -35,12 +40,13 @@ export default function Header() {
                   )}
                   {!isSeller && (
                     <>
-                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile");
-                    reload(); }}>Buyer Profile</button>
-                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart");
-                    reload(); }}>Cart</button>
-                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist");
-                    reload(); }}>WishList</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/"); reload();  }}>Home</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products"); reload();  }}>Shop</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter");reload();  }}>Filter</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers"); reload();  }}>Offers</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile"); reload();  }}>Buyer Profile</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart"); reload(); }}>Cart</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist"); reload();  }}>WishList</button>
                     </>
                   )}
                   <button className='border-transparent text-white p-2' onClick={() => { navigate("/logout");
