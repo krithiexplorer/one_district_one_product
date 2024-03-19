@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FetchSellerDetails } from '../store/selectors/FetchSellerDetails';
 import { useRecoilState } from 'recoil';
+import { toast } from "react-toastify";
+import { ButtonComponent } from '../components/ButtonComponent';
 
 
 const ProductUploadComponent = () => {
@@ -75,9 +77,10 @@ const ProductUploadComponent = () => {
 
       if(entry)
       {
-        return <>
-          <h2>Success</h2>
-        </>
+        toast.success("Product added successfully");
+        setTimeout(()=>{
+          window.location.reload();
+        },2000)
       }
       // Handle success or navigate to a different page
 
@@ -88,8 +91,9 @@ const ProductUploadComponent = () => {
 
   return (
     <div>
-      <div className='h-screen flex justify-center items-center'>
-      <div className='flex flex-col bg-slate-500'>
+      <div className='h-screen flex flex-col justify-center items-center bg-slate-200'>
+      <Typography variant="h3">Add a new Product</Typography>
+      <div className='w-full flex flex-col bg-white p-5 rounded-md' >
       <label>Name:</label>
       <input type="text" name="name" value={productDetails.name} onChange={handleInputChange} />
 
@@ -111,7 +115,7 @@ const ProductUploadComponent = () => {
       <label>Image:</label>
       <input type="file" name="image" onChange={handleImageChange} />
 
-      <Button><button onClick={handleProductUpload}>Upload Product</button></Button>
+      <button className='w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={handleProductUpload}>Upload Product</button>
       </div> 
       </div>
       

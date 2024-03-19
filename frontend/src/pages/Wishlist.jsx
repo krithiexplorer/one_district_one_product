@@ -11,8 +11,8 @@ export default function ViewCart() {
   const wishlistProductsLoadable = useRecoilValueLoadable(FetchWishlistedProducts);
 
   switch (wishlistProductsLoadable.state) {
-    case 'loading':
-      return <ClockLoader color="#36d7b7" />;
+    case 'loading':<div className='h-screen flex justify-center items-center'><ClockLoader color="#36d7b7" /></div>
+      return ;
     case 'hasValue':
       const wishlistedProducts = wishlistProductsLoadable.contents;
 

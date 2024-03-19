@@ -13,10 +13,18 @@ export default function Header() {
     <div>
       <div className="bg-red-700">
         <div>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/") }}>Home</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products") }}>Shop</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter") }}>Filter</button>
-          <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers") }}>Offers</button>
+          {!isAuthenticated && (
+            <>
+            {!isSeller && (
+              <>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/") }}>Home</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products") }}>Shop</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter") }}>Filter</button>
+                <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers") }}>Offers</button>
+              </>
+            )}
+            </>
+          )}
           {isAuthenticated && (
             <>
                   {isSeller && (
@@ -27,6 +35,10 @@ export default function Header() {
                   )}
                   {!isSeller && (
                     <>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/") }}>Home</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_products") }}>Shop</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/filter") }}>Filter</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/offers") }}>Offers</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile") }}>Buyer Profile</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart") }}>Cart</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist") }}>WishList</button>

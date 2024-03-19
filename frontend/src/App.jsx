@@ -50,11 +50,18 @@ function App() {
           {/* Separate Sign-Up Pages */}
           <Route path="/signup/seller" element={<SignUpSeller />} />
           <Route path="/signup/buyer" element={<SignUpBuyer />} />
-
-          <Route path="/view_products" element={<ViewProducts />} />
-          <Route path="/product/:productId" element={<ProductDetails />} />
-          <Route path="/filter" element={<FilterBar />} />
-          <Route path="/offers" element={<FilterByOffer />} />
+          {!isAuthenticated && (
+              <>
+               {!isSeller && (
+                <>
+                  <Route path="/view_products" element={<ViewProducts />} />
+                  <Route path="/product/:productId" element={<ProductDetails />} />
+                  <Route path="/filter" element={<FilterBar />} />
+                  <Route path="/offers" element={<FilterByOffer />} />
+                </>
+               )}
+              </>
+          )}
           {/* Other routes accessible to authenticated users */}
           {isAuthenticated && (
             <>
@@ -64,6 +71,10 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/view_profile" element={<UserProfile />} />
                   <Route path="/purchase-success" element={<CheckoutSuccess/>}/>
+                  <Route path="/view_products" element={<ViewProducts />} />
+                  <Route path="/product/:productId" element={<ProductDetails />} />
+                  <Route path="/filter" element={<FilterBar />} />
+                  <Route path="/offers" element={<FilterByOffer />} />
                 </>
               )}
               {isSeller && (
