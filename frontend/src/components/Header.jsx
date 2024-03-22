@@ -47,6 +47,8 @@ export default function Header() {
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile"); reload();  }}>Buyer Profile</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart"); reload(); }}>Cart</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist"); reload();  }}>WishList</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/Orders"); reload();  }}>Orders</button>
+
                     </>
                   )}
                   <button className='border-transparent text-white p-2' onClick={() => { navigate("/logout");

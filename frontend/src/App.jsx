@@ -23,6 +23,9 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutSuccess from './components/CheckoutSuccess';
 import Home from './pages/Home';
+import Orders from './pages/Orders';
+
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(LoginAtom);
@@ -75,6 +78,7 @@ function App() {
                   <Route path="/product/:productId" element={<ProductDetails />} />
                   <Route path="/filter" element={<FilterBar />} />
                   <Route path="/offers" element={<FilterByOffer />} />
+                  <Route path="/Orders" element={<Orders />} />
                 </>
               )}
               {isSeller && (
