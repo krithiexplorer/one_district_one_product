@@ -1,7 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const { authMiddleware } = require("../middleware");
-const { Products, Users } = require("../db");
+const { Products, Users, Orders } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
@@ -222,5 +222,42 @@ usersRouter.get('/user_details',authMiddleware,async(req,res)=>{
         details
     })
 })
+usersRouter.get('/orders', authMiddleware, async (req, res) => {
+    try {
+        const orders = await Orders.find({ userId: req.userId });
+        if (!orders) {
+            return res.status(404).json({ message: 'No orders found' });
+        }
+
+        const productIds = orders.flatMap(order => order.products.map(product => product.productId));
+        const productQuantity = orders.flatMap(order => order.products.map(product => product.quantity));
+        //const productTotal = orders.flatMap(order => order.products.map(product => product.total));        
+        const userproducts = await Promise.all(productIds.map(async (productId) => {
+            const product = await Products.findById(productId);
+            if (!product) {
+                console.log(`Product not found for productId: ${productId}`);
+                return null;
+            }
+            return product;
+        }));
+
+        const formattedProducts = userproducts.map(product => {
+            if (!product) {
+                return null;
+            }
+            const imageUrl = `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
+            return {
+                name: product.name,
+                image: imageUrl
+            };
+        }).filter(product => product !== null);
+
+        res.json({formattedProducts,productQuantity});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 
 module.exports = usersRouter;
