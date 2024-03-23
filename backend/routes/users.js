@@ -5,7 +5,6 @@ const { Products, Users, Orders } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
-// const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
