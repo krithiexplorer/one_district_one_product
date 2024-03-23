@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 function Home() {
   return (
-    <div className='bg-gradient-to-r from-red-100 to-red-700'>
+    <div className='bg-gradient-to-r from-red-100 to-red-600'>
         <div className='h-screen flex flex-col justify-center p-5'>
         <Typography variant="h1">
             ONE DISTRICT ONE PRODUCT 

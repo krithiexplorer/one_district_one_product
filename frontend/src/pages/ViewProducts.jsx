@@ -3,6 +3,7 @@ import { useRecoilValueLoadable } from 'recoil';
 import { Grid } from '@mui/material';
 import Product from '../components/Product';
 import { ProductsAtom } from '../store/atoms/ProductAtom';
+import ClockLoader from "react-spinners/ClockLoader";
 
 export default function ViewProducts() {
   const ProductsLoadable = useRecoilValueLoadable(ProductsAtom);

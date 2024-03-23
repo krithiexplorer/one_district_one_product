@@ -1,11 +1,10 @@
 const express = require("express");
 const usersRouter = express.Router();
 const { authMiddleware } = require("../middleware");
-const { Products, Users } = require("../db");
+const { Products, Users, Orders } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
-// const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
