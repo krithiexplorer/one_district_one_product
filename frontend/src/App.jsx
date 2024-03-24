@@ -23,8 +23,10 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutSuccess from './components/CheckoutSuccess';
 import Home from './pages/Home';
+import Apps from './components/Apps';
+import SalesPredictionForm from './components/SalesPredictionForm';
+import ProductRec from './components/ProductRec';
 import Orders from './pages/Orders';
-
 
 
 function App() {
@@ -74,6 +76,8 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/view_profile" element={<UserProfile />} />
                   <Route path="/purchase-success" element={<CheckoutSuccess/>}/>
+                  <Route path="/predict" element={<Apps/>}/>
+                  <Route path="/recommendations" element={<ProductRec/>}/>
                   <Route path="/view_products" element={<ViewProducts />} />
                   <Route path="/product/:productId" element={<ProductDetails />} />
                   <Route path="/filter" element={<FilterBar />} />
@@ -85,6 +89,7 @@ function App() {
                 <>
                   <Route path="/seller/addProduct" element={<ProductUploadComponent />} />
                   <Route path="/seller/view_profile" element={<SellerProfile />} />
+                  <Route path="/seller/sales_predict" element={<SalesPredictionForm />} />
                 </>
               )}
             </>
@@ -108,4 +113,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
