@@ -23,6 +23,7 @@ export default function Header() {
                     <>
                       <button className='border-transparent text-white p-2'onClick={() => { navigate("/seller/view_profile") }}>Seller Profile</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/seller/addProduct") }}>Add Product</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/seller/sales_predict") }}>Sales Prediction</button>
                     </>
                   )}
                   {!isSeller && (
@@ -30,6 +31,8 @@ export default function Header() {
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/view_profile") }}>Buyer Profile</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/cart") }}>Cart</button>
                       <button className='border-transparent text-white p-2' onClick={() => { navigate("/wishlist") }}>WishList</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/predict") }}>Coupons</button>
+                      <button className='border-transparent text-white p-2' onClick={() => { navigate("/recommendations") }}>Recommendations</button>
                     </>
                   )}
                   <button className='border-transparent text-white p-2' onClick={() => { navigate("/logout") }}>Logout</button>

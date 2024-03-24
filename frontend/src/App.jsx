@@ -23,6 +23,9 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckoutSuccess from './components/CheckoutSuccess';
 import Home from './pages/Home';
+import Apps from './components/Apps';
+import SalesPredictionForm from './components/SalesPredictionForm';
+import ProductRec from './components/ProductRec';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(LoginAtom);
@@ -64,12 +67,15 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/view_profile" element={<UserProfile />} />
                   <Route path="/purchase-success" element={<CheckoutSuccess/>}/>
+                  <Route path="/predict" element={<Apps/>}/>
+                  <Route path="/recommendations" element={<ProductRec/>}/>
                 </>
               )}
               {isSeller && (
                 <>
                   <Route path="/seller/addProduct" element={<ProductUploadComponent />} />
                   <Route path="/seller/view_profile" element={<SellerProfile />} />
+                  <Route path="/seller/sales_predict" element={<SalesPredictionForm />} />
                 </>
               )}
             </>
@@ -93,4 +99,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

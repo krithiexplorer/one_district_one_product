@@ -22,10 +22,6 @@ usersRouter.post('/signup',async(req,res)=>{
     }
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
-    await Account.create({
-        userId,
-        balance:  Math.floor(Math.random() * 10000)
-    })
     if(currentUser){
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({

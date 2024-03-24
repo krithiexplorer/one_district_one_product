@@ -3,7 +3,7 @@ const stripeRouter = express.Router();
 const { authMiddleware } = require('../middleware');
 const { default: Stripe } = require('stripe');
 const { Orders, Users, Products } = require('../db');
-const stripe = Stripe('sk_test_51Ou9vHSFYhTczrb57NBykYSEw0LO606o0tkM2KD78uRA9rJRGBVri8TEnW9xpwmCad8r9ccBEjixyT2hTGPR6U9E00MNCivQGE')
+const stripe = Stripe('sk_test_51OvaBNSB0YQ6uQ0o8N0ACkvZbZIo7ogZktAuwWhRZGKYcCDxFLGfByB2XUtMZOHhYGzayr6HEPfFS9aOBVofter200ExZfUhl4')
 
 stripeRouter.post('/create-checkout-session',authMiddleware, async (req, res) => {
     const customer = await stripe.customers.create({
@@ -132,7 +132,7 @@ async function emptyCart(customer){
   await Users.updateOne({ _id: userId }, { $set: { cartProducts: [] } });
 }
 
-let endpointSecret = "whsec_8a4a4a6f59be410d0ad73ac2bafb70a2a55bd6a28f3ca2576a22c987634816c9";
+let endpointSecret = "whsec_48b613d10e2d27a7219884ac0b51885635740d2379717ee1aa4c83143c1831c1";
 
 stripeRouter.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   let data;
