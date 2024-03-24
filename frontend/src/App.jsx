@@ -26,6 +26,8 @@ import Home from './pages/Home';
 import Apps from './components/Apps';
 import SalesPredictionForm from './components/SalesPredictionForm';
 import ProductRec from './components/ProductRec';
+import Orders from './pages/Orders';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useRecoilState(LoginAtom);
@@ -38,7 +40,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        {  isAuthenticated && <><Header /></>}
         <FetchProducts/>
         <Routes>
           {isAuthenticated ? (
@@ -53,11 +55,18 @@ function App() {
           {/* Separate Sign-Up Pages */}
           <Route path="/signup/seller" element={<SignUpSeller />} />
           <Route path="/signup/buyer" element={<SignUpBuyer />} />
-
-          <Route path="/view_products" element={<ViewProducts />} />
-          <Route path="/product/:productId" element={<ProductDetails />} />
-          <Route path="/filter" element={<FilterBar />} />
-          <Route path="/offers" element={<FilterByOffer />} />
+          {!isAuthenticated && (
+              <>
+               {!isSeller && (
+                <>
+                  <Route path="/view_products" element={<ViewProducts />} />
+                  <Route path="/product/:productId" element={<ProductDetails />} />
+                  <Route path="/filter" element={<FilterBar />} />
+                  <Route path="/offers" element={<FilterByOffer />} />
+                </>
+               )}
+              </>
+          )}
           {/* Other routes accessible to authenticated users */}
           {isAuthenticated && (
             <>
@@ -69,6 +78,11 @@ function App() {
                   <Route path="/purchase-success" element={<CheckoutSuccess/>}/>
                   <Route path="/predict" element={<Apps/>}/>
                   <Route path="/recommendations" element={<ProductRec/>}/>
+                  <Route path="/view_products" element={<ViewProducts />} />
+                  <Route path="/product/:productId" element={<ProductDetails />} />
+                  <Route path="/filter" element={<FilterBar />} />
+                  <Route path="/offers" element={<FilterByOffer />} />
+                  <Route path="/Orders" element={<Orders />} />
                 </>
               )}
               {isSeller && (

@@ -12,7 +12,7 @@ export default function ViewCart() {
 
   switch (wishlistProductsLoadable.state) {
     case 'loading':
-      return <ClockLoader color="#36d7b7" />;
+      return <div className='h-screen flex justify-center items-center'><ClockLoader color="#36d7b7" /></div>;
     case 'hasValue':
       const wishlistedProducts = wishlistProductsLoadable.contents;
 

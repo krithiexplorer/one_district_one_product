@@ -1,18 +1,22 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import flyer from "../assets/6505894.jpg";
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+  function viewProducts()
+  {
+     navigate("/view_products");
+  }
   return (
-    <div className='bg-gradient-to-r from-red-100 to-red-700'>
-        <div className='h-screen flex flex-col justify-center p-5'>
-        <Typography variant="h1">
-            ONE DISTRICT ONE PRODUCT 
-        </Typography>
-        <div>
-            <button className='w-52 text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4'>Shop Now</button>
+    <div className='h-screen flex flex-col justify-center items-center'>
+      <img className='w-2/3 h-2/3' src={flyer} alt="" />
+      <div className=' h-1/3 p-5'>
+        <h3 className='font-semibold text-2xl'>Purchase Authentic Products</h3>
+        <div className='flex justify-center'>
+          <button className='w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={viewProducts}>Shop Now</button>
         </div>
-        </div>
-        
+      </div>
     </div>
   );
 }

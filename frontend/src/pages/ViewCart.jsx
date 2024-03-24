@@ -35,7 +35,7 @@ export default function ViewCart() {
   
   switch (cartProductsLoadable.state) {
     case 'loading':
-      return <ClockLoader color="#36d7b7" />//use spinner
+      return <div className='h-screen flex justify-center items-center'><ClockLoader color="#36d7b7" /></div>
     case 'hasValue':
       const cartProducts = cartProductsLoadable.contents.products;
 
@@ -49,7 +49,7 @@ export default function ViewCart() {
               {cartProducts.map((product) => (
                 <div className='p-2'>
                   <Card key={product._id}>
-                    <CartProducts product={product} />
+                    <CartProducts product={product}  />
                     <CardContent>
                     Select Quantity:
                     <input

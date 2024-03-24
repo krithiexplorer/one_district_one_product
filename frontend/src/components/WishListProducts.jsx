@@ -23,7 +23,7 @@ export default function WishListProducts({ product }) {
       });
       if(response)
       {
-        toast.success("Product added to wishlist")
+        toast.success("Product added to cart")
       }
     } catch (error) {
       console.error("Error adding to cart:", error.message);

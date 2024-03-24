@@ -33,8 +33,8 @@ export default function SigninBuyer(){
             });       
             localStorage.setItem("token",response.data.token);
             localStorage.setItem("seller",response.data.seller);
-
-            navigate("/view_products");
+            navigate("/");
+            window.location.reload();
             }}buttonname={"Sign in"} />
             <ButtonWarning text={"Don't have an account? "} buttonText={"Sign Up"}  to={"/signup/buyer"}/>
         </div>
