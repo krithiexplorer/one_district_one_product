@@ -5,7 +5,6 @@ const { Products, Users, Orders } = require("../db");
 const jwt = require('jsonwebtoken');
 const {userSignupObj} = require("../validate");
 const {signinobj} =  require("../validate");
-// const { startSession } = require("mongoose");
 const PASSWORD = "unchi";
 
 
@@ -27,10 +26,7 @@ usersRouter.post('/signup',async(req,res)=>{
     }
     const currentUser = await Users.create(user)
     const userId = currentUser._id;
-    // await Account.create({
-    //     userId,
-    //     balance:  Math.floor(Math.random() * 10000)
-    // })
+
     if(currentUser){
         const token = jwt.sign({userId},PASSWORD)
         res.status(200).json({
@@ -231,7 +227,7 @@ usersRouter.get('/orders', authMiddleware, async (req, res) => {
 
         const productIds = orders.flatMap(order => order.products.map(product => product.productId));
         const productQuantity = orders.flatMap(order => order.products.map(product => product.quantity));
-        //const productTotal = orders.flatMap(order => order.products.map(product => product.total));        
+        
         const userproducts = await Promise.all(productIds.map(async (productId) => {
             const product = await Products.findById(productId);
             if (!product) {
@@ -247,6 +243,7 @@ usersRouter.get('/orders', authMiddleware, async (req, res) => {
             }
             const imageUrl = `data:${product.image.contentType};base64,${product.image.data.toString('base64')}`;
             return {
+                _id:product._id,
                 name: product.name,
                 image: imageUrl
             };
