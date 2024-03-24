@@ -68,21 +68,21 @@ const ProductDetails = () => {
            <img className="w-96 h-96" src={product.image} alt={product.name} />
         </div>
         <div className='flex flex-col justify-center p-5'>
-          <Typography variant="h5" gutterBottom>
+          <h3 className='font-semibold text-lg'>
             {product.name}
-          </Typography>
-          <Typography variant="h6">
+          </h3>
+          <h3>
             Rs.{product.price}
-          </Typography>
-          <Typography variant="h6">
+          </h3>
+          <h3>
             Seller: {product.seller}
-          </Typography>
-          <Typography variant="h6" color="InfoText">
+          </h3>
+          <p>
             {product.description}
-          </Typography>
-          <Typography variant="h6" color="InfoText">
+          </p>
+          <p>
             Love from: {product.district}
-          </Typography>
+          </p>
           <div>
             <button className=' text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToCart} ><FaCartArrowDown/></button>
             <button className=' text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4' onClick={addToWishlist}><FaHeart/></button>
