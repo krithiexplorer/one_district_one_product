@@ -11,7 +11,7 @@ const ProductRec = () => {
 
   const handleGetRecommendations = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/recommendations/${userId}`);
+      const response = await axios.get(`http://127.0.0.1:8001/recommendations/${userId}`);
       setRecommendations(response.data.recommendations);
     } catch (error) {
       console.error('Error fetching recommendations:', error);

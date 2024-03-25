@@ -10,7 +10,7 @@ function Home() {
   }
   return (
     <div className='h-screen flex flex-col justify-center items-center'>
-      <img className='w-2/3 h-2/3' src={flyer} alt="" />
+      <img className='p-5 w-2/3 h-2/3' src={flyer} alt="" />
       <div className=' h-1/3 p-5'>
         <h3 className='font-semibold text-2xl'>Purchase Authentic Products</h3>
         <div className='flex justify-center'>

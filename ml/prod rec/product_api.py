@@ -27,6 +27,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    )
 
 # Function to get recommendations for a user
 def get_recommendations(user_id, top_n=3):

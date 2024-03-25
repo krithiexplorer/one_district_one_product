@@ -19,7 +19,7 @@ function Apps() {
   const predictCluster = async () => {
     try {
       // Make POST request to the prediction endpoint
-      const response = await axios.post('http://127.0.0.1:8000/predict', inputData);
+      const response = await axios.post('http://127.0.0.1:8001/predict', inputData);
 
       // Set prediction and offers state with response data
       setPrediction(response.data.predicted_cluster);

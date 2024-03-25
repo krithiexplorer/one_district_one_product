@@ -9,7 +9,7 @@ import json
 import requests
 
 # URL of the FastAPI server
-url = 'http://127.0.0.1:8000/predict'  # Replace this with the actual URL of your FastAPI server
+url = 'http://127.0.0.1:8001/predict'  # Replace this with the actual URL of your FastAPI server
 
 # Input data
 gender = input("Enter the gender: ")
